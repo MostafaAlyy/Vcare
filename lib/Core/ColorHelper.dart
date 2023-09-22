@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
 
 class ColorHelper {
-  static const mainColor = Color(0xff174068);
+  static const Color mainColor = Color(0xff174068);
 }

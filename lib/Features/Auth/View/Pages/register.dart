@@ -15,7 +15,9 @@ class _RegisterPageState extends State<RegisterPage> {
   final TextEditingController emailController = TextEditingController();
   final TextEditingController phoneController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
-
+  final TextEditingController passwordConfirmController =
+      TextEditingController();
+  bool male = true;
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
@@ -35,7 +37,7 @@ class _RegisterPageState extends State<RegisterPage> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Text(
-                      "Add New User!",
+                      "Let’s get started!",
                       style: TextStyle(
                           fontSize:
                               MediaQuery.of(context).textScaleFactor * 38),
@@ -44,7 +46,7 @@ class _RegisterPageState extends State<RegisterPage> {
                       height: 20,
                     ),
                     Text(
-                      "Create a new user now and assign them tasks right away.",
+                      "create an account and start booking now.",
                       textAlign: TextAlign.center,
                       style: TextStyle(
                           color: Colors.grey,
@@ -94,6 +96,77 @@ class _RegisterPageState extends State<RegisterPage> {
                         enabledBorder: OutlineInputBorder(),
                         labelText: "Password",
                       ),
+                    ),
+                    const SizedBox(
+                      height: 20,
+                    ),
+                    TextFormField(
+                      controller: passwordConfirmController,
+                      keyboardType: TextInputType.emailAddress,
+                      decoration: const InputDecoration(
+                        enabledBorder: OutlineInputBorder(),
+                        labelText: "Confirm Password",
+                      ),
+                    ),
+                    const SizedBox(
+                      height: 10,
+                    ),
+                    Row(
+                      children: [
+                        Row(
+                          children: [
+                            Transform.scale(
+                              scale: 1.2,
+                              child: Checkbox(
+                                activeColor: ColorHelper.mainColor,
+                                checkColor: Colors.white,
+                                value: male,
+                                onChanged: (bool? value) {
+                                  setState(() {
+                                    male = value!;
+                                  });
+                                },
+                              ),
+                            ),
+                            Text(
+                              'Male',
+                              style: TextStyle(
+                                  color: Colors.black,
+                                  fontSize:
+                                      MediaQuery.of(context).textScaleFactor *
+                                          18),
+                            )
+                          ],
+                        ),
+                        const SizedBox(
+                          width: 20,
+                        ),
+                        Row(
+                          children: [
+                            Transform.scale(
+                              scale: 1.2,
+                              child: Checkbox(
+                                activeColor: ColorHelper.mainColor,
+                                checkColor: Colors.white,
+                                value: !male,
+                                onChanged: (bool? value) {
+                                  setState(() {
+                                    male = !value!;
+                                  });
+                                },
+                              ),
+                            ),
+                            Text(
+                              'Female',
+                              style: TextStyle(
+                                  color: Colors.black,
+                                  fontSize:
+                                      MediaQuery.of(context).textScaleFactor *
+                                          18),
+                            )
+                          ],
+                        ),
+                      ],
                     ),
                     const SizedBox(
                       height: 20,
