@@ -1,9 +1,13 @@
 // ignore_for_file: use_key_in_widget_constructors
 
 import 'package:flutter/material.dart';
+import 'package:vcare/Core/Database/remote/DioHelper/dio_helper.dart';
 import 'package:vcare/Features/Auth/View/Pages/register.dart';
 
-void main() => runApp(MyApp());
+void main() {
+  DioHelper.init();
+  return runApp(MyApp());
+}
 
 class MyApp extends StatelessWidget {
   @override
