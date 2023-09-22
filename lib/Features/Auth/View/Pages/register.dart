@@ -17,8 +17,11 @@ class _RegisterPageState extends State<RegisterPage> {
   final TextEditingController phoneController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
   final TextEditingController passwordConfirmController =
+
       TextEditingController();
   bool male = true;
+  var formKey = GlobalKey<FormState>();
+
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
@@ -45,6 +48,7 @@ class _RegisterPageState extends State<RegisterPage> {
               child: Padding(
                 padding: const EdgeInsets.all(12.0),
                 child: Form(
+                  key: formKey,
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.center,
                     mainAxisAlignment: MainAxisAlignment.center,
@@ -189,6 +193,9 @@ class _RegisterPageState extends State<RegisterPage> {
                         height: MediaQuery.of(context).size.height / 15,
                         child: MaterialButton(
                           onPressed: () {
+                            if(formKey.currentState?.validate() == false){
+                              return;
+                            }
                             cupit.register(
                                 name: nameController.text,
                                 email: emailController.text,
