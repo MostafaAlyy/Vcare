@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:vcare/Core/ColorHelper.dart';
+import 'package:vcare/Core/my_validators.dart';
 import 'package:vcare/Features/Auth/ViewModel/cubit/auth_cubit.dart';
 
 class RegisterPage extends StatefulWidget {
@@ -17,8 +18,11 @@ class _RegisterPageState extends State<RegisterPage> {
   final TextEditingController phoneController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
   final TextEditingController passwordConfirmController =
+
       TextEditingController();
   bool male = true;
+  var formKey = GlobalKey<FormState>();
+
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
@@ -45,6 +49,7 @@ class _RegisterPageState extends State<RegisterPage> {
               child: Padding(
                 padding: const EdgeInsets.all(12.0),
                 child: Form(
+                  key: formKey,
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.center,
                     mainAxisAlignment: MainAxisAlignment.center,
@@ -70,6 +75,7 @@ class _RegisterPageState extends State<RegisterPage> {
                         height: 20,
                       ),
                       TextFormField(
+                        validator: (value) => MyValidators.nameValidator(value),
                         controller: nameController,
                         keyboardType: TextInputType.emailAddress,
                         decoration: const InputDecoration(
@@ -81,6 +87,7 @@ class _RegisterPageState extends State<RegisterPage> {
                         height: 20,
                       ),
                       TextFormField(
+                        validator: (value) => MyValidators.emailValidator(value) ,
                         controller: emailController,
                         keyboardType: TextInputType.emailAddress,
                         decoration: const InputDecoration(
@@ -103,6 +110,7 @@ class _RegisterPageState extends State<RegisterPage> {
                         height: 20,
                       ),
                       TextFormField(
+                        validator: (value) => MyValidators.passwordValidator(value),
                         controller: passwordController,
                         keyboardType: TextInputType.emailAddress,
                         decoration: const InputDecoration(
@@ -114,6 +122,10 @@ class _RegisterPageState extends State<RegisterPage> {
                         height: 20,
                       ),
                       TextFormField(
+                        validator: (value) => MyValidators.repeatPasswordValidator(
+                          password: passwordController.text,
+                          value: value
+                        ),
                         controller: passwordConfirmController,
                         keyboardType: TextInputType.emailAddress,
                         decoration: const InputDecoration(
@@ -189,6 +201,9 @@ class _RegisterPageState extends State<RegisterPage> {
                         height: MediaQuery.of(context).size.height / 15,
                         child: MaterialButton(
                           onPressed: () {
+                            if(formKey.currentState?.validate() == false){
+                              return;
+                            }
                             cupit.register(
                                 name: nameController.text,
                                 email: emailController.text,
