@@ -201,7 +201,9 @@ class _RegisterPageState extends State<RegisterPage> {
                         children: [
                           const Text('Already have an account?'),
                           TextButton(
-                              onPressed: () => Navigator.of(context).pushNamed(LoginPage.routeName), child: const Text('Login here'))
+                              onPressed: () => Navigator.of(context)
+                                  .pushNamed(LoginPage.routeName),
+                              child: const Text('Login here'))
                         ],
                       ),
                       SizedBox(
@@ -224,10 +226,7 @@ class _RegisterPageState extends State<RegisterPage> {
                           color: ColorHelper.mainColor,
                           child: const Text(
                             "Register",
-                            style: TextStyle(
-                                color: Colors.white,
-                                fontWeight: FontWeight.bold,
-                                fontSize: 25),
+                            style: TextStyle(color: Colors.white, fontSize: 25),
                           ),
                         ),
                       )
