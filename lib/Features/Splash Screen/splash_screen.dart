@@ -1,25 +1,30 @@
 import 'package:flutter/material.dart';
 import 'package:vcare/Core/ColorHelper.dart';
-import 'package:vcare/Features/Auth/View/Pages/register.dart';
+import 'package:vcare/Features/onboarding/View/Pages/onboarding.dart';
 
 class SplashScreen extends StatelessWidget {
   const SplashScreen({super.key});
-static const String routeName = 'splash-screen';
+  static const String routeName = 'splash-screen';
   @override
   Widget build(BuildContext context) {
-    Future.delayed(Duration(seconds: 2),() {
-      Navigator.pushReplacementNamed(context, RegisterPage.routeName
-      );
-    },)
-
-    ;
+    Future.delayed(
+      const Duration(seconds: 2),
+      () {
+        Navigator.pushReplacementNamed(context, OnBoarding.routeName);
+      },
+    );
     return Scaffold(
-      appBar: AppBar(),
       body: Container(
         height: double.infinity,
         width: double.infinity,
         color: ColorHelper.mainColor,
-        child: Text('VCare',style: TextStyle(color: Colors.white),),
+        child: const Center(
+          child: Text(
+            'VCare',
+            style: TextStyle(
+                color: Colors.white, fontSize: 46, fontWeight: FontWeight.bold),
+          ),
+        ),
       ),
     );
   }

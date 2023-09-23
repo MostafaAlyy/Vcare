@@ -2,6 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:vcare/Core/Database/remote/DioHelper/dio_helper.dart';
+import 'package:vcare/Features/onboarding/View/Pages/onboarding.dart';
 import 'package:vcare/Features/Auth/View/Pages/register.dart';
 import 'package:vcare/Features/Splash%20Screen/splash_screen.dart';
 
@@ -19,12 +20,11 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         useMaterial3: true,
       ),
-
       initialRoute: SplashScreen.routeName,
       routes: {
-        SplashScreen.routeName : (_) => SplashScreen(),
-        RegisterPage.routeName : (_) => RegisterPage(),
-
+        SplashScreen.routeName: (_) => const SplashScreen(),
+        RegisterPage.routeName: (_) => const RegisterPage(),
+        OnBoarding.routeName: (_) => const OnBoarding(),
       },
     );
   }
