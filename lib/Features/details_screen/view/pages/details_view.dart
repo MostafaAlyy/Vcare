@@ -1,28 +1,36 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:vcare/Core/general_components/main_button.dart';
 
 import '../../../../Core/ColorHelper.dart';
+import '../../../Home Tab/View/Pages/home_tab.dart';
 
 class DetailsPage extends StatelessWidget {
   static const String routeName = 'details_page';
+
   const DetailsPage({super.key});
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: Scaffold(
-          body: DetailsScreenBody(
-        controller: TextEditingController(),
-      )),
-    );
+
+    return Scaffold(
+      appBar: AppBar(
+        backgroundColor: ColorHelper.mainColor,
+      ),
+        body: DetailsScreenBody(
+      controller: TextEditingController(),
+    ));
   }
 }
 
 class DetailsScreenBody extends StatelessWidget {
   const DetailsScreenBody({super.key, required this.controller});
   final TextEditingController controller;
+
   @override
   Widget build(BuildContext context) {
+    Arrgs arrgs = ModalRoute.of(context)!.settings.arguments as Arrgs;
+
     print(controller.text);
     return SingleChildScrollView(
       child: Column(
@@ -31,6 +39,12 @@ class DetailsScreenBody extends StatelessWidget {
             height: 0.3.sh,
             width: double.infinity,
             color: ColorHelper.mainColor,
+            child: CachedNetworkImage(
+              fit: BoxFit.fill,
+              imageUrl: arrgs.Doctor[arrgs.doctorIndex].photo??'',
+              placeholder: (context, url) => CircularProgressIndicator(),
+              errorWidget: (context, url, error) => Icon(Icons.error),
+            ),
           ),
           SizedBox(
             height: 20.h,
@@ -40,14 +54,14 @@ class DetailsScreenBody extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                const Text('Doctor Name',
+                 Text(arrgs.Doctor[arrgs.doctorIndex].name??'',
                     style: TextStyle(
                       fontSize: 34,
                       fontWeight: FontWeight.w400,
                       color: ColorHelper.mainColor,
                     )),
                 Text(
-                  'Doctor description here and summary\n about everything they did and who they are\n etc.. lorem ipsum lorem ipsum lorem ipsum lorem ipsum.',
+                  arrgs.Doctor[arrgs.doctorIndex].description??'',
                   style: TextStyle(
                     fontSize: 18.sp,
                     fontWeight: FontWeight.w400,

@@ -11,7 +11,7 @@ import 'home_states.dart';
 class HomeCubit extends Cubit<HomeState> {
   HomeCubit() : super(HomeInitial());
   static HomeCubit get(BuildContext context) => BlocProvider.of(context);
-  void getData() async {
+   getData() async {
     emit(HomeLoading());
     try {
       var response =
