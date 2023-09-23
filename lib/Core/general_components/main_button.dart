@@ -5,6 +5,7 @@ import '../ColorHelper.dart';
 class MainButton extends StatelessWidget {
   final String text;
   final VoidCallback onTap;
+  final bool hasCircularBorder;
   final Color? color;
 
   const MainButton({
@@ -12,6 +13,7 @@ class MainButton extends StatelessWidget {
     required this.text,
     required this.onTap,
     this.color,
+    this.hasCircularBorder = false,
   }) : super(key: key);
 
   @override
@@ -22,12 +24,20 @@ class MainButton extends StatelessWidget {
       child: ElevatedButton(
         onPressed: onTap,
         style: ElevatedButton.styleFrom(
-            backgroundColor: ColorHelper.mainColor,
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(24.0),
-            )),
+          backgroundColor: ColorHelper.mainColor,
+          shape: hasCircularBorder
+              ? RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(24.0),
+                )
+              : null,
+        ),
         child: Text(
           text,
+          style: const TextStyle(
+            color: Colors.white,
+            fontWeight: FontWeight.w500,
+            fontSize: 20,
+          ),
         ),
       ),
     );

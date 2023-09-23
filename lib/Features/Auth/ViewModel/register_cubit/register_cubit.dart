@@ -4,11 +4,11 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:vcare/Core/Database/remote/DioHelper/dio_helper.dart';
 import 'package:vcare/Core/Database/remote/DioHelper/end_points.dart';
 
-part 'auth_state.dart';
+part 'register_state.dart';
 
-class AuthCubit extends Cubit<AuthState> {
-  AuthCubit() : super(AuthInitial());
-  static AuthCubit get(BuildContext context) => BlocProvider.of(context);
+class RegisterCubit extends Cubit<RegisterState> {
+  RegisterCubit() : super(AuthInitial());
+  static RegisterCubit get(BuildContext context) => BlocProvider.of(context);
 
   void register({
     required String name,
