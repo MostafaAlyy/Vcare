@@ -19,7 +19,6 @@ class _RegisterPageState extends State<RegisterPage> {
   final TextEditingController phoneController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
   final TextEditingController passwordConfirmController =
-
       TextEditingController();
   bool male = true;
   var formKey = GlobalKey<FormState>();
@@ -88,8 +87,8 @@ class _RegisterPageState extends State<RegisterPage> {
                         height: 20,
                       ),
                       TextFormField(
-
-                        validator: (value) => MyValidators.emailValidator(value) ,
+                        validator: (value) =>
+                            MyValidators.emailValidator(value),
                         controller: emailController,
                         keyboardType: TextInputType.emailAddress,
                         decoration: const InputDecoration(
@@ -101,7 +100,6 @@ class _RegisterPageState extends State<RegisterPage> {
                         height: 20,
                       ),
                       TextFormField(
-
                         controller: phoneController,
                         keyboardType: TextInputType.phone,
                         decoration: const InputDecoration(
@@ -113,7 +111,8 @@ class _RegisterPageState extends State<RegisterPage> {
                         height: 20,
                       ),
                       TextFormField(
-                        validator: (value) => MyValidators.passwordValidator(value),
+                        validator: (value) =>
+                            MyValidators.passwordValidator(value),
                         controller: passwordController,
                         keyboardType: TextInputType.emailAddress,
                         decoration: const InputDecoration(
@@ -125,10 +124,10 @@ class _RegisterPageState extends State<RegisterPage> {
                         height: 20,
                       ),
                       TextFormField(
-                        validator: (value) => MyValidators.repeatPasswordValidator(
-                          password: passwordController.text,
-                          value: value
-                        ),
+                        validator: (value) =>
+                            MyValidators.repeatPasswordValidator(
+                                password: passwordController.text,
+                                value: value),
                         controller: passwordConfirmController,
                         keyboardType: TextInputType.emailAddress,
                         decoration: const InputDecoration(
@@ -196,15 +195,19 @@ class _RegisterPageState extends State<RegisterPage> {
                           ),
                         ],
                       ),
-                      const SizedBox(
-                        height: 20,
+                      Row(
+                        children: [
+                          const Text('Already have an account?'),
+                          TextButton(
+                              onPressed: () {}, child: const Text('Login here'))
+                        ],
                       ),
                       SizedBox(
                         width: double.infinity,
                         height: MediaQuery.of(context).size.height / 15,
                         child: MaterialButton(
                           onPressed: () {
-                            if(formKey.currentState?.validate() == false){
+                            if (formKey.currentState?.validate() == false) {
                               return;
                             }
                             cupit.register(
