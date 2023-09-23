@@ -11,22 +11,22 @@ import '../../Model/Doctors.dart';
 import '../../ViewModel/Cubit/home_cubit.dart';
 
 class HomeTab extends StatelessWidget {
-   HomeTab({super.key});
+  const HomeTab({super.key});
   @override
   Widget build(BuildContext context) {
-    return RefreshIndicator(
-      color: ColorHelper.mainColor,
-      onRefresh: (){
-       return Future.delayed(Duration(seconds: 1));
-      },
-      child: BlocProvider(
-        create: (context) => HomeCubit()..getData(),
-        child: BlocConsumer<HomeCubit, HomeState>(
-          listener: (context, state) {},
-          builder: (context, state) {
-
-            if (state is HomeSuccessState) {
-              return Padding(
+    return BlocProvider(
+      create: (context) => HomeCubit()..getData(),
+      child: BlocConsumer<HomeCubit, HomeState>(
+        listener: (context, state) {},
+        builder: (context, state) {
+          var cupit = HomeCubit.get(context);
+          if (state is HomeSuccessState) {
+            return RefreshIndicator(
+              color: ColorHelper.mainColor,
+              onRefresh: () {
+                return cupit.getData();
+              },
+              child: Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 8.0),
                 child: Column(
                   children: [
@@ -39,7 +39,8 @@ class HomeTab extends StatelessWidget {
                           return Column(
                             children: [
                               Row(
-                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
                                 children: [
                                   Text(
                                     state.homeTabResponse.data?[majorIndex]
@@ -50,8 +51,8 @@ class HomeTab extends StatelessWidget {
                                   TextButton.icon(
                                     onPressed: () {},
                                     icon: const Text('More Details'),
-                                    label:
-                                        const Icon(Icons.arrow_right_alt_rounded),
+                                    label: const Icon(
+                                        Icons.arrow_right_alt_rounded),
                                   ),
                                 ],
                               ),
@@ -73,7 +74,8 @@ class HomeTab extends StatelessWidget {
                                       height: 210,
                                       width: 150,
                                       decoration: BoxDecoration(
-                                          borderRadius: BorderRadius.circular(11),
+                                          borderRadius:
+                                              BorderRadius.circular(11),
                                           border:
                                               Border.all(color: Colors.black)),
                                       child: Column(
@@ -89,8 +91,10 @@ class HomeTab extends StatelessWidget {
                                                   BorderRadius.circular(10),
                                             ),
                                             child: ClipRRect(
-                                              borderRadius: BorderRadius.circular(10),
-                                              clipBehavior: Clip.antiAliasWithSaveLayer,
+                                              borderRadius:
+                                                  BorderRadius.circular(10),
+                                              clipBehavior:
+                                                  Clip.antiAliasWithSaveLayer,
                                               child: CachedNetworkImage(
                                                 fit: BoxFit.fill,
                                                 imageUrl:
@@ -114,18 +118,21 @@ class HomeTab extends StatelessWidget {
                                                   state
                                                           .homeTabResponse
                                                           .data?[majorIndex]
-                                                          .doctors?[doctorsIndex]
+                                                          .doctors?[
+                                                              doctorsIndex]
                                                           .name ??
                                                       '',
                                                   style: const TextStyle(
-                                                      fontWeight: FontWeight.w700,
+                                                      fontWeight:
+                                                          FontWeight.w700,
                                                       fontSize: 16),
                                                 ),
                                                 Text(
                                                   state
                                                           .homeTabResponse
                                                           .data?[majorIndex]
-                                                          .doctors?[doctorsIndex]
+                                                          .doctors?[
+                                                              doctorsIndex]
                                                           .degree ??
                                                       '',
                                                   style: const TextStyle(
@@ -140,14 +147,21 @@ class HomeTab extends StatelessWidget {
                                             child: TextButton.icon(
                                               onPressed: () {
                                                 Navigator.pushNamed(context,
-                                                    DetailsPage.routeName,arguments: Arrgs(
-                                                      majorIndex: majorIndex,
-                                                        doctorIndex: doctorsIndex,
-                                                        Doctor: state.homeTabResponse.data![majorIndex].doctors??[]));
+                                                    DetailsPage.routeName,
+                                                    arguments: Arrgs(
+                                                        majorIndex: majorIndex,
+                                                        doctorIndex:
+                                                            doctorsIndex,
+                                                        Doctor: state
+                                                                .homeTabResponse
+                                                                .data![
+                                                                    majorIndex]
+                                                                .doctors ??
+                                                            []));
                                               },
                                               icon: const Text('More Details'),
-                                              label: const Icon(
-                                                  Icons.arrow_right_alt_rounded),
+                                              label: const Icon(Icons
+                                                  .arrow_right_alt_rounded),
                                             ),
                                           ),
                                         ],
@@ -167,26 +181,30 @@ class HomeTab extends StatelessWidget {
                     ),
                   ],
                 ),
-              );
-            } else if (state is HomeLoading) {
-              return const CircularProgressIndicator();
-            } else if (state is HomeErrorState) {
-              return Text(state.message ?? '');
-            } else {
-              return Container();
-            }
-          },
-        ),
+              ),
+            );
+          } else if (state is HomeLoading) {
+            return const Center(child: CircularProgressIndicator());
+          } else if (state is HomeErrorState) {
+            return Text(state.message ?? '');
+          } else {
+            return Container();
+          }
+        },
       ),
     );
   }
-
 }
+
 class Arrgs {
   int? id;
   int doctorIndex;
   int majorIndex;
   List<Doctors> Doctor;
 
-  Arrgs({required this.majorIndex,required this.doctorIndex, required this.Doctor, this.id});
+  Arrgs(
+      {required this.majorIndex,
+      required this.doctorIndex,
+      required this.Doctor,
+      this.id});
 }
