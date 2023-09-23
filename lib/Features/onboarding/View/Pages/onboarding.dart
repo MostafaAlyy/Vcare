@@ -2,9 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:onboarding/onboarding.dart';
 import 'package:vcare/Core/ColorHelper.dart';
 import 'package:vcare/Features/Auth/View/Pages/register.dart';
-import 'package:vcare/Features/onboarding/View/Components/onboarding_page%202.dart';
-import 'package:vcare/Features/onboarding/View/Components/onboarding_page%203.dart';
-import 'package:vcare/Features/onboarding/View/Components/onboarding_page1.dart';
 
 class OnBoarding extends StatefulWidget {
   const OnBoarding({Key? key}) : super(key: key);

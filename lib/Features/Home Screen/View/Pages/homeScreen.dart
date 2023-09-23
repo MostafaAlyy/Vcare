@@ -13,10 +13,10 @@ class HomeScreen extends StatelessWidget {
       floatingActionButtonLocation:
           FloatingActionButtonLocation.miniCenterDocked,
       floatingActionButton: FloatingActionButton(
-        child: Icon(Icons.search),
         backgroundColor: ColorHelper.mainColor,
         elevation: 0,
         onPressed: () {},
+        child: const Icon(Icons.search),
       ),
       bottomNavigationBar: BottomAppBar(
         color: Colors.white,
@@ -26,9 +26,9 @@ class HomeScreen extends StatelessWidget {
           elevation: 0,
           selectedItemColor: ColorHelper.mainColor,
           unselectedIconTheme: const IconThemeData(color: Colors.grey),
-          selectedIconTheme: IconThemeData(color: ColorHelper.mainColor),
+          selectedIconTheme: const IconThemeData(color: ColorHelper.mainColor),
           currentIndex: 0,
-          items: [
+          items: const [
             BottomNavigationBarItem(label: 'Home', icon: Icon(Icons.home)),
             BottomNavigationBarItem(
                 label: 'Doctors',
@@ -39,11 +39,11 @@ class HomeScreen extends StatelessWidget {
           ],
         ),
       ),
-      drawer: Drawer(
+      drawer: const Drawer(
         backgroundColor: Colors.white,
       ),
       appBar: AppBar(
-        iconTheme: IconThemeData(color: Colors.white),
+        iconTheme: const IconThemeData(color: Colors.white),
         backgroundColor: ColorHelper.mainColor,
         centerTitle: false,
         title: const Text(
