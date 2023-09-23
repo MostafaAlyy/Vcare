@@ -7,6 +7,7 @@ import 'package:vcare/Core/general_components/main_button.dart';
 import 'package:vcare/Core/my_validators.dart';
 import 'package:vcare/Features/Auth/View/Pages/register.dart';
 import 'package:vcare/Features/Auth/ViewModel/login_cubit/login_cubit.dart';
+import 'package:vcare/Features/Home%20Screen/View/Pages/homeScreen.dart';
 
 import '../../../../Core/general_components/CustomCircularProgressIndicator.dart';
 import '../../../../Core/general_components/build_show_toast.dart';
@@ -147,7 +148,8 @@ class _LoginPageState extends State<LoginPage> {
           TextSpan(
             text: 'Register here.',
             recognizer: TapGestureRecognizer()
-              ..onTap = () =>  Navigator.of(context).pushNamed(RegisterPage.routeName),
+              ..onTap =
+                  () => Navigator.of(context).pushNamed(RegisterPage.routeName),
           )
         ],
       ),
@@ -159,6 +161,8 @@ class _LoginPageState extends State<LoginPage> {
       listener: (context, state) {
         if (state is LoginSuccess) {
           buildShowToast(state.successMessage);
+          Navigator.pushNamedAndRemoveUntil(
+              context, HomeScreen.routeName, (route) => false);
         }
         if (state is LoginError) {
           buildShowToast(state.errorMessage);
