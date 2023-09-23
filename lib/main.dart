@@ -18,7 +18,9 @@ void main() async {
   await DioHelper.init();
 
   await const FlutterSecureStorage().read(key: 'token').then((value) {
-    LoginCubit.userData.token = value;
+    if (value != null) {
+      LoginCubit.userData.token = value;
+    }
   });
   return runApp(MyApp());
 }
@@ -37,9 +39,9 @@ class MyApp extends StatelessWidget {
             // useMaterial3: true,
             ),
         //home: const LoginPage(),
-        initialRoute: OnBoarding.routeName,
+        initialRoute: SplashScreen.routeName,
         routes: {
-          SplashScreen.routeName: (_) =>  SplashScreen(),
+          SplashScreen.routeName: (_) => const SplashScreen(),
           RegisterPage.routeName: (_) => const RegisterPage(),
           OnBoarding.routeName: (_) => const OnBoarding(),
           LoginPage.routeName: (_) => const LoginPage(),
