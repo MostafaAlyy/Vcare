@@ -40,6 +40,8 @@ dependencies:
   fluttertoast: ^8.2.2
   dio: ^5.3.3
   persistent_bottom_nav_bar: ^5.0.2
+  flutter_screenutil: ^5.9.0
+  google_fonts: ^6.1.0
   onboarding: ^3.1.0
   http: ^1.1.0
   cached_network_image: ^3.2.3
@@ -66,11 +68,9 @@ flutter:
   # the material Icons class.
   uses-material-design: true
 
-  # To add assets to your application, add an assets section, like this:
   assets:
     - assets/Icons/
     - assets/images/
-  #   - images/a_dot_ham.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware
