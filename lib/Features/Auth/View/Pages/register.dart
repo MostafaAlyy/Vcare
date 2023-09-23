@@ -7,6 +7,7 @@ import 'package:vcare/Features/Auth/ViewModel/cubit/auth_cubit.dart';
 
 class RegisterPage extends StatefulWidget {
   const RegisterPage({super.key});
+  static const String routeName = 'register-screen';
 
   @override
   State<RegisterPage> createState() => _RegisterPageState();
@@ -87,6 +88,7 @@ class _RegisterPageState extends State<RegisterPage> {
                         height: 20,
                       ),
                       TextFormField(
+
                         validator: (value) => MyValidators.emailValidator(value) ,
                         controller: emailController,
                         keyboardType: TextInputType.emailAddress,
@@ -99,8 +101,9 @@ class _RegisterPageState extends State<RegisterPage> {
                         height: 20,
                       ),
                       TextFormField(
+
                         controller: phoneController,
-                        keyboardType: TextInputType.emailAddress,
+                        keyboardType: TextInputType.phone,
                         decoration: const InputDecoration(
                           enabledBorder: OutlineInputBorder(),
                           labelText: "Phone",
