@@ -4,6 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:vcare/Core/Database/remote/DioHelper/dio_helper.dart';
 import 'package:vcare/Features/Auth/View/Pages/register.dart';
+import 'package:vcare/Features/Home%20Screen/View/Pages/homeScreen.dart';
+import 'package:vcare/Features/Splash%20Screen/splash_screen.dart';
 
 import 'Features/Auth/View/Pages/login.dart';
 import 'Features/Splash Screen/splash_screen.dart';
@@ -36,6 +38,8 @@ class MyApp extends StatelessWidget {
           OnBoarding.routeName: (_) => const OnBoarding(),
           LoginPage.routeName: (_) => const LoginPage(),
           DetailsPage.routeName: (_) => const DetailsPage(),
+           HomeScreen.routeName : (_) => HomeScreen()
+          
         },
       ),
     );
