@@ -32,7 +32,7 @@ class HomeScreen extends StatelessWidget {
             BottomNavigationBarItem(label: 'Home', icon: Icon(Icons.home)),
             BottomNavigationBarItem(
                 label: 'Doctors',
-                icon: ImageIcon(AssetImage('Assets/Icons/icon_doctor.png'))),
+                icon: ImageIcon(AssetImage('assets/Icons/icon_doctor.png'))),
             BottomNavigationBarItem(
                 label: 'History', icon: Icon(Icons.access_time_filled)),
             BottomNavigationBarItem(label: 'Account', icon: Icon(Icons.person)),

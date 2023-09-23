@@ -39,7 +39,7 @@ class MyApp extends StatelessWidget {
         //home: const LoginPage(),
         initialRoute: OnBoarding.routeName,
         routes: {
-          SplashScreen.routeName: (_) => const SplashScreen(),
+          SplashScreen.routeName: (_) =>  SplashScreen(),
           RegisterPage.routeName: (_) => const RegisterPage(),
           OnBoarding.routeName: (_) => const OnBoarding(),
           LoginPage.routeName: (_) => const LoginPage(),
