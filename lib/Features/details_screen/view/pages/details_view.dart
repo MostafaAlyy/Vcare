@@ -42,8 +42,8 @@ class DetailsScreenBody extends StatelessWidget {
             child: CachedNetworkImage(
               fit: BoxFit.fill,
               imageUrl: arrgs.Doctor[arrgs.doctorIndex].photo??'',
-              placeholder: (context, url) => CircularProgressIndicator(),
-              errorWidget: (context, url, error) => Icon(Icons.error),
+              placeholder: (context, url) => const CircularProgressIndicator(),
+              errorWidget: (context, url, error) => const Icon(Icons.error),
             ),
           ),
           SizedBox(
@@ -55,7 +55,7 @@ class DetailsScreenBody extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                  Text(arrgs.Doctor[arrgs.doctorIndex].name??'',
-                    style: TextStyle(
+                    style: const TextStyle(
                       fontSize: 34,
                       fontWeight: FontWeight.w400,
                       color: ColorHelper.mainColor,

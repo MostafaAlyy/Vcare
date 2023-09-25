@@ -16,7 +16,7 @@ class HomeScreenCubit extends Cubit<HomeScreenStates> {
   int currentTapIndex = 0;
   List<Widget> tabs = [
     HomeTab(),
-    DoctorsTab(),
+    const DoctorsTab(),
     AccountTab(),
     HistoryTab()
   ];
