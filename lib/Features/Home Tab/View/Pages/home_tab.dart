@@ -149,11 +149,7 @@ class HomeTab extends StatelessWidget {
                                             padding: const EdgeInsets.all(3.0),
                                             child: TextButton.icon(
                                               onPressed: () {
-                                                Navigator.of(
-                                                  context,
-                                                  rootNavigator: true,
-                                                ).pushNamed(
-                                                    DetailsPage.routeName,
+                                                Navigator.of(context,rootNavigator: true).pushNamed(DetailsPage.routeName,
                                                     arguments: Arrgs(
                                                         majorIndex: majorIndex,
                                                         doctorIndex:

@@ -45,7 +45,7 @@ class MyApp extends StatelessWidget {
           RegisterPage.routeName: (_) => const RegisterPage(),
           OnBoarding.routeName: (_) => const OnBoarding(),
           LoginPage.routeName: (_) => const LoginPage(),
-          DetailsPage.routeName: (_) => const DetailsPage(),
+          DetailsPage.routeName: (_) =>  DetailsPage(),
           HomeScreen.routeName: (_) => HomeScreen()
         },
       ),
