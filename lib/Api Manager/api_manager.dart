@@ -5,6 +5,9 @@ import 'package:http/http.dart' as http;
 
 import 'package:vcare/Features/Home%20Tab/Model/HomeTabResponse.dart';
 
+import '../Features/Account Tab/Model/ProfileResponse.dart';
+import '../Features/History Tab/Model/HistoryResponse.dart';
+
 class ApiManager {
   static const String baseUrl = 'vcare.integration25.com';
 
@@ -18,5 +21,25 @@ class ApiManager {
 
     var loginResponse = HomeTabResponse.fromJson(jsonDecode(request.body));
     return loginResponse;
+  }
+  static Future<ProfileResponse> getProfileData(
+      {required String token}) async {
+    var uri = Uri.https(baseUrl, 'api/user/profile');
+    var request = await http.get(uri,headers: {
+      HttpHeaders.authorizationHeader : "Bearer $token"
+    },);
+
+    var profileResponse = ProfileResponse.fromJson(jsonDecode(request.body));
+    return profileResponse;
+  }
+  static Future<HistoryResponse> getHistoryData(
+      {required String token}) async {
+    var uri = Uri.https(baseUrl, 'api/appointment/index');
+    var request = await http.get(uri,headers: {
+      HttpHeaders.authorizationHeader : "Bearer $token"
+    },);
+
+    var historyResponse = HistoryResponse.fromJson(jsonDecode(request.body));
+    return historyResponse;
   }
 }
