@@ -4,3 +4,5 @@ const registerEndpoint = 'auth/register';
 const homeEndPoint ='home/index';
 const loginEndpoint = 'auth/login';
 const getAllDoctorsEndpoint = 'doctor/index';
+
+const getAllAppointmentEndpoint = 'appointment/index';

@@ -97,8 +97,11 @@ class HomeTab extends StatelessWidget {
                                                   Clip.antiAliasWithSaveLayer,
                                               child: CachedNetworkImage(
                                                 fit: BoxFit.fill,
-                                                imageUrl:
-                                                    "https://via.placeholder.com/640x480.png/005566?text=doctors+aliquid",
+                                                imageUrl: state
+                                                    .homeTabResponse
+                                                    .data![majorIndex]
+                                                    .doctors![doctorsIndex]
+                                                    .photo!,
                                                 placeholder: (context, url) =>
                                                     const CircularProgressIndicator(),
                                                 errorWidget:
@@ -146,7 +149,10 @@ class HomeTab extends StatelessWidget {
                                             padding: const EdgeInsets.all(3.0),
                                             child: TextButton.icon(
                                               onPressed: () {
-                                                Navigator.pushNamed(context,
+                                                Navigator.of(
+                                                  context,
+                                                  rootNavigator: true,
+                                                ).pushNamed(
                                                     DetailsPage.routeName,
                                                     arguments: Arrgs(
                                                         majorIndex: majorIndex,

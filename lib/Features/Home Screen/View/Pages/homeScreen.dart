@@ -18,9 +18,6 @@ class HomeScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-        drawer: const Drawer(
-          backgroundColor: Colors.white,
-        ),
         appBar: AppBar(
           iconTheme: const IconThemeData(color: Colors.white),
           backgroundColor: ColorHelper.mainColor,
@@ -72,7 +69,7 @@ class HomeScreen extends StatelessWidget {
   ];
   List<PersistentBottomNavBarItem> bottomNavBarItems = [
     PersistentBottomNavBarItem(
-      icon: const Icon(CupertinoIcons.home),
+      icon: const Icon(Icons.home),
       activeColorSecondary: ColorHelper.mainColor,
       title: "Home",
       activeColorPrimary: CupertinoColors.activeBlue,
@@ -80,9 +77,7 @@ class HomeScreen extends StatelessWidget {
     ),
     PersistentBottomNavBarItem(
       activeColorSecondary: ColorHelper.mainColor,
-      icon: const Icon(
-        Icons.health_and_safety_outlined,
-      ),
+      icon: const Icon(Icons.add_box),
       title: "Doctors",
       activeColorPrimary: CupertinoColors.activeBlue,
       inactiveColorPrimary: CupertinoColors.systemGrey,
@@ -103,7 +98,7 @@ class HomeScreen extends StatelessWidget {
     ),
     PersistentBottomNavBarItem(
       activeColorSecondary: ColorHelper.mainColor,
-      icon: const Icon(CupertinoIcons.person),
+      icon: const Icon(Icons.account_circle),
       title: "Account",
       activeColorPrimary: CupertinoColors.activeBlue,
       inactiveColorPrimary: CupertinoColors.systemGrey,
