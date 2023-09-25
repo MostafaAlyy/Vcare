@@ -17,14 +17,13 @@ class DoctorsTab extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) =>
-      GetAllDoctorsCubit()
-        ..getAllDoctors(),
+      create: (context) => GetAllDoctorsCubit()..getAllDoctors(),
       child: BlocConsumer<GetAllDoctorsCubit, GetAllDoctorsState>(
         listener: (context, state) {
           // TODO: implement listener
         },
         builder: (context, state) {
+          var cupit = GetAllDoctorsCubit.get(context);
           return Padding(
             padding: EdgeInsets.symmetric(horizontal: 8.r, vertical: 10.r),
             child: Column(
@@ -114,12 +113,12 @@ class DoctorsTab extends StatelessWidget {
                 Text(
                   'doctor',
                   style:
-                  TextStyle(fontSize: 16.sp, fontWeight: FontWeight.w400),
+                      TextStyle(fontSize: 16.sp, fontWeight: FontWeight.w400),
                 ),
                 Text(
                   'doctors.description!',
                   style:
-                  TextStyle(fontSize: 16.sp, fontWeight: FontWeight.w400),
+                      TextStyle(fontSize: 16.sp, fontWeight: FontWeight.w400),
                 ),
               ],
             ),

@@ -1,5 +1,8 @@
 import 'package:bloc/bloc.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:meta/meta.dart';
+import 'package:vcare/Features/Auth/ViewModel/login_cubit/login_cubit.dart';
 import 'package:vcare/Features/Home%20Tab/Model/Doctors.dart';
 
 import '../../../../Core/Database/remote/DioHelper/dio_helper.dart';
@@ -9,14 +12,15 @@ part 'get_all_doctors_state.dart';
 
 class GetAllDoctorsCubit extends Cubit<GetAllDoctorsState> {
   GetAllDoctorsCubit() : super(GetAllDoctorsInitial());
+  static GetAllDoctorsCubit get(BuildContext context) =>
+      BlocProvider.of(context);
 
   List<Doctors> doctors = [];
   void getAllDoctors() {
+    doctors = [];
     emit(GetAllDoctorsLoading());
     DioHelper.getData(
-            url: getAllDoctorsEndpoint,
-            token:
-                'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwczovL3ZjYXJlLmludGVncmF0aW9uMjUuY29tL2FwaS9hdXRoL2xvZ2luIiwiaWF0IjoxNjk1NjcyNDMwLCJleHAiOjE2OTU2NzYwMzAsIm5iZiI6MTY5NTY3MjQzMCwianRpIjoiQVUxVXZadnMzdkFPQnBBRyIsInN1YiI6Ijc1IiwicHJ2IjoiMjNiZDVjODk0OWY2MDBhZGIzOWU3MDFjNDAwODcyZGI3YTU5NzZmNyJ9.Y6dPH9f1vWSRzVSF3rBpxt74JJCTkaQkEr3rCL8rufY')
+            url: getAllDoctorsEndpoint, token: LoginCubit.userData.token)
         .then((value) {
       for (var element in value.data['data']) {
         doctors.add(Doctors.fromJson(element));
