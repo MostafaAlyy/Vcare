@@ -2,6 +2,9 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:persistent_bottom_nav_bar/persistent_tab_view.dart';
 import 'package:vcare/Core/ColorHelper.dart';
+import 'package:vcare/Features/Account%20Tab/View/Pages/account_tab.dart';
+import 'package:vcare/Features/Doctors%20Tab/View/Pages/doctors_tab.dart';
+import 'package:vcare/Features/History%20Tab/View/Pages/history_tab.dart';
 
 import '../../../Home Tab/View/Pages/home_tab.dart';
 
@@ -62,9 +65,9 @@ class HomeScreen extends StatelessWidget {
   //
   List<Widget> tabs = [
     const HomeTab(),
-    const HomeTab(),
-    const HomeTab(),
-    const HomeTab(),
+    const DoctorsTab(),
+    const HistoryTab(),
+    const AccountTab(),
     const HomeTab(),
   ];
   List<PersistentBottomNavBarItem> bottomNavBarItems = [
