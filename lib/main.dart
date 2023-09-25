@@ -36,9 +36,8 @@ class MyApp extends StatelessWidget {
         debugShowCheckedModeBanner: false,
         title: 'VCare',
         theme: ThemeData(
-            // useMaterial3: true,
-            ),
-        //home: const LoginPage(),
+          useMaterial3: true,
+        ),
         initialRoute: SplashScreen.routeName,
         routes: {
           SplashScreen.routeName: (_) => const SplashScreen(),

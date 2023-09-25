@@ -1,4 +1,6 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:persistent_bottom_nav_bar/persistent_tab_view.dart';
 import 'package:vcare/Core/ColorHelper.dart';
 
 import '../../../Home Tab/View/Pages/home_tab.dart';
@@ -6,56 +8,102 @@ import '../../../Home Tab/View/Pages/home_tab.dart';
 class HomeScreen extends StatelessWidget {
   HomeScreen({super.key});
   static const String routeName = 'home-screen';
+  PersistentTabController bottomNavBarController =
+      PersistentTabController(initialIndex: 0);
   int selectedIndex = 0;
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      floatingActionButtonLocation:
-          FloatingActionButtonLocation.miniCenterDocked,
-      floatingActionButton: FloatingActionButton(
-        backgroundColor: ColorHelper.mainColor,
-        elevation: 0,
-        onPressed: () {},
-        child: const Icon(Icons.search),
-      ),
-      bottomNavigationBar: BottomAppBar(
-        color: Colors.white,
-        child: BottomNavigationBar(
-          type: BottomNavigationBarType.fixed,
-          backgroundColor: Colors.transparent,
-          elevation: 0,
-          selectedItemColor: ColorHelper.mainColor,
-          unselectedIconTheme: const IconThemeData(color: Colors.grey),
-          selectedIconTheme: const IconThemeData(color: ColorHelper.mainColor),
-          currentIndex: 0,
-          items: const [
-            BottomNavigationBarItem(label: 'Home', icon: Icon(Icons.home)),
-            BottomNavigationBarItem(
-                label: 'Doctors',
-                icon: ImageIcon(AssetImage('assets/Icons/icon_doctor.png'))),
-            BottomNavigationBarItem(
-                label: 'History', icon: Icon(Icons.access_time_filled)),
-            BottomNavigationBarItem(label: 'Account', icon: Icon(Icons.person)),
-          ],
+    return SafeArea(
+      child: Scaffold(
+        drawer: const Drawer(
+          backgroundColor: Colors.white,
+        ),
+        appBar: AppBar(
+          iconTheme: const IconThemeData(color: Colors.white),
+          backgroundColor: ColorHelper.mainColor,
+          centerTitle: false,
+          title: const Text(
+            'VCare',
+            style: TextStyle(color: Colors.white),
+          ),
+        ),
+        body: PersistentTabView(
+          context,
+          controller: bottomNavBarController,
+          screens: tabs,
+          items: bottomNavBarItems,
+          confineInSafeArea: true,
+          backgroundColor: Colors.white,
+          handleAndroidBackButtonPress: true,
+          resizeToAvoidBottomInset: true,
+          stateManagement: true,
+          hideNavigationBarWhenKeyboardShows: true,
+          decoration: NavBarDecoration(
+            borderRadius: BorderRadius.circular(10.0),
+            colorBehindNavBar: ColorHelper.mainColor,
+          ),
+          popAllScreensOnTapOfSelectedTab: true,
+          popActionScreens: PopActionScreensType.all,
+          itemAnimationProperties: const ItemAnimationProperties(
+            duration: Duration(milliseconds: 200),
+            curve: Curves.ease,
+          ),
+          screenTransitionAnimation: const ScreenTransitionAnimation(
+            animateTabTransition: true,
+            curve: Curves.ease,
+            duration: Duration(milliseconds: 200),
+          ),
+          navBarStyle: NavBarStyle.style15,
         ),
       ),
-      drawer: const Drawer(
-        backgroundColor: Colors.white,
-      ),
-      appBar: AppBar(
-        iconTheme: const IconThemeData(color: Colors.white),
-        backgroundColor: ColorHelper.mainColor,
-        centerTitle: false,
-        title: const Text(
-          'VCare',
-          style: TextStyle(color: Colors.white),
-        ),
-      ),
-      body:tabs[selectedIndex],
     );
   }
+
   //
   List<Widget> tabs = [
-    HomeTab()
+    const HomeTab(),
+    const HomeTab(),
+    const HomeTab(),
+    const HomeTab(),
+    const HomeTab(),
+  ];
+  List<PersistentBottomNavBarItem> bottomNavBarItems = [
+    PersistentBottomNavBarItem(
+      icon: const Icon(CupertinoIcons.home),
+      activeColorSecondary: ColorHelper.mainColor,
+      title: "Home",
+      activeColorPrimary: CupertinoColors.activeBlue,
+      inactiveColorPrimary: CupertinoColors.systemGrey,
+    ),
+    PersistentBottomNavBarItem(
+      activeColorSecondary: ColorHelper.mainColor,
+      icon: const Icon(
+        Icons.health_and_safety_outlined,
+      ),
+      title: "Doctors",
+      activeColorPrimary: CupertinoColors.activeBlue,
+      inactiveColorPrimary: CupertinoColors.systemGrey,
+    ),
+    PersistentBottomNavBarItem(
+      activeColorSecondary: ColorHelper.mainColor,
+      icon: const Icon(CupertinoIcons.search, color: Colors.white),
+      title: "Search",
+      activeColorPrimary: ColorHelper.mainColor,
+      inactiveColorPrimary: CupertinoColors.systemGrey,
+    ),
+    PersistentBottomNavBarItem(
+      activeColorSecondary: ColorHelper.mainColor,
+      icon: const Icon(Icons.access_time_filled),
+      title: "History",
+      activeColorPrimary: CupertinoColors.activeBlue,
+      inactiveColorPrimary: CupertinoColors.systemGrey,
+    ),
+    PersistentBottomNavBarItem(
+      activeColorSecondary: ColorHelper.mainColor,
+      icon: const Icon(CupertinoIcons.person),
+      title: "Account",
+      activeColorPrimary: CupertinoColors.activeBlue,
+      inactiveColorPrimary: CupertinoColors.systemGrey,
+    ),
   ];
 }

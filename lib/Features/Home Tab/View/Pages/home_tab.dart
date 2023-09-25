@@ -57,7 +57,7 @@ class HomeTab extends StatelessWidget {
                                 ],
                               ),
                               SizedBox(
-                                height: 220,
+                                height: 240,
                                 width: double.infinity,
                                 child: ListView.separated(
                                   shrinkWrap: true,

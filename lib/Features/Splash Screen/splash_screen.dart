@@ -27,7 +27,7 @@ class SplashScreen extends StatelessWidget {
         child: const Center(
             child: Text(
           'VCare',
-          style: TextStyle(color: Colors.white),
+          style: TextStyle(color: Colors.white, fontSize: 36),
         )),
       ),
     );
