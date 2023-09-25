@@ -77,8 +77,7 @@ class HomeScreen extends StatelessWidget {
     ),
     PersistentBottomNavBarItem(
       activeColorSecondary: ColorHelper.mainColor,
-      icon:  Icon(Icons.add_box),
-
+      icon: const Icon(Icons.add_box),
       title: "Doctors",
       activeColorPrimary: CupertinoColors.activeBlue,
       inactiveColorPrimary: CupertinoColors.systemGrey,

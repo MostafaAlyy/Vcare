@@ -12,14 +12,13 @@ class DetailsPage extends StatelessWidget {
   const DetailsPage({super.key});
   @override
   Widget build(BuildContext context) {
-
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: ColorHelper.mainColor,
-      ),
+        appBar: AppBar(
+          backgroundColor: ColorHelper.mainColor,
+        ),
         body: DetailsScreenBody(
-      controller: TextEditingController(),
-    ));
+          controller: TextEditingController(),
+        ));
   }
 }
 
@@ -41,9 +40,9 @@ class DetailsScreenBody extends StatelessWidget {
             color: ColorHelper.mainColor,
             child: CachedNetworkImage(
               fit: BoxFit.fill,
-              imageUrl: arrgs.Doctor[arrgs.doctorIndex].photo??'',
-              placeholder: (context, url) => CircularProgressIndicator(),
-              errorWidget: (context, url, error) => Icon(Icons.error),
+              imageUrl: arrgs.Doctor[arrgs.doctorIndex].photo ?? '',
+              placeholder: (context, url) => const CircularProgressIndicator(),
+              errorWidget: (context, url, error) => const Icon(Icons.error),
             ),
           ),
           SizedBox(
@@ -54,14 +53,14 @@ class DetailsScreenBody extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                 Text(arrgs.Doctor[arrgs.doctorIndex].name??'',
-                    style: TextStyle(
+                Text(arrgs.Doctor[arrgs.doctorIndex].name ?? '',
+                    style: const TextStyle(
                       fontSize: 34,
                       fontWeight: FontWeight.w400,
                       color: ColorHelper.mainColor,
                     )),
                 Text(
-                  arrgs.Doctor[arrgs.doctorIndex].description??'',
+                  arrgs.Doctor[arrgs.doctorIndex].description ?? '',
                   style: TextStyle(
                     fontSize: 18.sp,
                     fontWeight: FontWeight.w400,
