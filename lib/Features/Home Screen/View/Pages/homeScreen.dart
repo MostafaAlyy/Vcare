@@ -18,9 +18,6 @@ class HomeScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-        drawer: const Drawer(
-          backgroundColor: Colors.white,
-        ),
         appBar: AppBar(
           iconTheme: const IconThemeData(color: Colors.white),
           backgroundColor: ColorHelper.mainColor,
