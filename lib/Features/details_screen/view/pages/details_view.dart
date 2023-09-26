@@ -6,6 +6,9 @@ import 'package:vcare/Core/general_components/main_button.dart';
 import 'package:vcare/Features/details_screen/ViewModel/make_appointment_cubit.dart';
 
 import '../../../../Core/ColorHelper.dart';
+import '../../../History Tab/Model/Appointment.dart';
+import '../../../History Tab/Model/Appointment.dart';
+import '../../../History Tab/Model/Appointment.dart';
 import '../../../Home Screen/View/Pages/homeScreen.dart';
 import '../../../Home Tab/View/Pages/home_tab.dart';
 import '../../ViewModel/make_appointment_states.dart';
@@ -51,7 +54,7 @@ class DetailsScreenBody extends StatelessWidget {
               color: ColorHelper.mainColor,
               child: CachedNetworkImage(
                 fit: BoxFit.fill,
-                imageUrl: arrgs.Doctor[arrgs.doctorIndex].photo??'',
+                imageUrl: arrgs.doctor?[arrgs.doctorIndex??0].photo??'',
                 placeholder: (context, url) => CircularProgressIndicator(),
                 errorWidget: (context, url, error) => Icon(Icons.error),
               ),
@@ -64,14 +67,14 @@ class DetailsScreenBody extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                   Text(arrgs.Doctor[arrgs.doctorIndex].name??'',
+                   Text(arrgs.doctor?[arrgs.doctorIndex??0].name??'',
                       style: TextStyle(
                         fontSize: 34,
                         fontWeight: FontWeight.w400,
                         color: ColorHelper.mainColor,
                       )),
                   Text(
-                    arrgs.Doctor[arrgs.doctorIndex].description??'',
+                    arrgs.doctor?[arrgs.doctorIndex??0].description??'',
                     style: TextStyle(
                       fontSize: 18.sp,
                       fontWeight: FontWeight.w400,
@@ -246,7 +249,7 @@ Widget buildConsumerBookButton({
            text: 'Book an appointment',
            onTap: () {
              bookAppointment(
-                 doctorId:  arrgs.Doctor[arrgs.doctorIndex].id??-1,
+                 doctorId:  arrgs.doctor?[arrgs.doctorIndex??0].id??-1,
                  startTime: timeController.text,
                  note: noteController.text
              );

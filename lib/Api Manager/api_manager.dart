@@ -7,6 +7,7 @@ import 'package:vcare/Features/Home%20Tab/Model/HomeTabResponse.dart';
 
 import '../Features/Account Tab/Model/ProfileResponse.dart';
 import '../Features/History Tab/Model/HistoryResponse.dart';
+import '../Features/Home Tab/Model/view More/ViewMoreResponse.dart';
 import '../Features/details_screen/Model/BookAppointmentResponse.dart';
 
 class ApiManager {
@@ -61,4 +62,20 @@ class ApiManager {
     var bookAppointmentResponse = BookAppointmentResponse.fromJson(jsonDecode(request.body));
     return bookAppointmentResponse;
   }
+
+
+
+  static Future<ViewMoreResponse> getViewAllData(
+      {required String token,required int id}) async {
+    var uri = Uri.https(baseUrl, 'api/specialization/show/$id');
+    var request = await http.get(uri,headers: {
+      HttpHeaders.authorizationHeader : "Bearer $token"
+    },);
+
+    var loginResponse = ViewMoreResponse.fromJson(jsonDecode(request.body));
+    return loginResponse;
+  }
+
+
+
 }
