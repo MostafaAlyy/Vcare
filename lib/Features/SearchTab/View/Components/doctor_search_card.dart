@@ -1,7 +1,9 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:vcare/Core/ColorHelper.dart';
+import 'package:vcare/Features/Home%20Tab/View/Pages/home_tab.dart';
 import 'package:vcare/Features/SearchTab/ViewModel/cubit/search_cubit.dart';
+import 'package:vcare/Features/details_screen/view/pages/details_view.dart';
 
 class DoctorSearchCard extends StatelessWidget {
   const DoctorSearchCard({
@@ -16,7 +18,11 @@ class DoctorSearchCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () {},
+      onTap: () {
+        Navigator.of(context, rootNavigator: true).pushNamed(
+            DetailsPage.routeName,
+            arguments: Arrgs(doctors: cupit.searchDoctorsList[index]));
+      },
       child: Row(
         children: [
           Container(

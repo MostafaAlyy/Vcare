@@ -6,6 +6,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:vcare/Core/ColorHelper.dart';
 import 'package:vcare/Features/Home%20Tab/View/Pages/view_more.dart';
 import 'package:vcare/Features/Home%20Tab/ViewModel/Cubit/home_states.dart';
+import 'package:vcare/Features/details_screen/Model/Doctor.dart';
 
 import '../../../details_screen/view/pages/details_view.dart';
 import '../../Model/Doctors.dart';
@@ -52,12 +53,19 @@ class HomeTab extends StatelessWidget {
                                   ),
                                   TextButton.icon(
                                     onPressed: () {
-                                      Navigator.of(context,rootNavigator: true).
-                                      pushNamed(ViewMore.routeName,
-                                          arguments: ViewMoreArgs(
-                                              id: state.homeTabResponse.data![majorIndex].id??-1,
-                                            specialization: state.homeTabResponse.data?[majorIndex].name??''
-                                          ));
+                                      Navigator.of(context, rootNavigator: true)
+                                          .pushNamed(ViewMore.routeName,
+                                              arguments: ViewMoreArgs(
+                                                  id: state
+                                                          .homeTabResponse
+                                                          .data![majorIndex]
+                                                          .id ??
+                                                      -1,
+                                                  specialization: state
+                                                          .homeTabResponse
+                                                          .data?[majorIndex]
+                                                          .name ??
+                                                      ''));
                                     },
                                     icon: const Text('More Details'),
                                     label: const Icon(
@@ -85,36 +93,30 @@ class HomeTab extends StatelessWidget {
                                           .data![majorIndex]
                                           .doctors![doctorsIndex]
                                           .photo!,
-                                      doctorName:  state
-                                          .homeTabResponse
-                                          .data?[majorIndex]
-                                          .doctors?[
-                                      doctorsIndex]
-                                          .name??'',
+                                      doctorName: state
+                                              .homeTabResponse
+                                              .data?[majorIndex]
+                                              .doctors?[doctorsIndex]
+                                              .name ??
+                                          '',
                                       degree: state
-                                          .homeTabResponse
-                                          .data?[majorIndex]
-                                          .doctors?[
-                                      doctorsIndex]
-                                          .degree ??
+                                              .homeTabResponse
+                                              .data?[majorIndex]
+                                              .doctors?[doctorsIndex]
+                                              .degree ??
                                           '',
                                       onTap: () {
-                                        Navigator.of(context,rootNavigator: true).pushNamed(DetailsPage.routeName,
-                                            arguments:
-
-                                            Arrgs(
-
-                                                majorIndex: majorIndex,
-                                                doctorIndex:
-                                                doctorsIndex,
-                                                doctor: state
-                                                    .homeTabResponse
-                                                    .data![
-                                                majorIndex]
-                                                    .doctors ??
-                                                    []
-
-                                        ));
+                                        Navigator.of(context,
+                                                rootNavigator: true)
+                                            .pushNamed(DetailsPage.routeName,
+                                                arguments: Arrgs(
+                                                    majorIndex: majorIndex,
+                                                    doctorIndex: doctorsIndex,
+                                                    doctor: state
+                                                            .homeTabResponse
+                                                            .data![majorIndex]
+                                                            .doctors ??
+                                                        []));
                                       },
                                     );
                                   },
@@ -146,8 +148,6 @@ class HomeTab extends StatelessWidget {
   }
 }
 
-
-
 class Arrgs {
   int? id;
   int? doctorIndex;
@@ -155,18 +155,12 @@ class Arrgs {
   List<Doctors>? doctor;
   Doctors? doctors;
 
-
   Arrgs(
-      { this.majorIndex,
-       this.doctorIndex,
-        this.doctor,
-       this.doctors,
-      this.id});
+      {this.majorIndex, this.doctorIndex, this.doctor, this.doctors, this.id});
 }
 
-
-class ViewMoreArgs{
+class ViewMoreArgs {
   int id;
   String specialization;
-  ViewMoreArgs({required this.id,required this.specialization});
+  ViewMoreArgs({required this.id, required this.specialization});
 }
