@@ -4,5 +4,7 @@ const registerEndpoint = 'auth/register';
 const homeEndPoint ='home/index';
 const loginEndpoint = 'auth/login';
 const getAllDoctorsEndpoint = 'doctor/index';
+const getAllCityEndpoint = 'city/index';
+const filerDoctorByCity = 'doctor/doctor-filter';
 
 const getAllAppointmentEndpoint = 'appointment/index';
