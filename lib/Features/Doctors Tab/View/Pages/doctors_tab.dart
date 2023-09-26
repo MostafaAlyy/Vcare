@@ -1,3 +1,4 @@
+import 'package:conditional_builder_null_safety/conditional_builder_null_safety.dart';
 import 'package:fancy_shimmer_image/fancy_shimmer_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -18,7 +19,6 @@ class DoctorsTab extends StatefulWidget {
 }
 
 class _DoctorsTabState extends State<DoctorsTab> {
-  City? initValue;
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
@@ -76,50 +76,51 @@ class _DoctorsTabState extends State<DoctorsTab> {
               create: (context) => GetAllCityCubit()..getAllCity(),
               child: BlocBuilder<GetAllCityCubit, GetAllCityState>(
                 builder: (context, state) {
-                  if (state is GetAllCitySuccess) {
-                    initValue = state.cities[0];
-                    return Container(
-                      color: const Color(0xff757575),
-                      child: Container(
-                        padding: EdgeInsets.all(20.r),
-                        decoration: const BoxDecoration(
-                          color: Colors.white,
-                          borderRadius: BorderRadius.only(
-                            topLeft: Radius.circular(20.0),
-                            topRight: Radius.circular(20.0),
+                  var cupitCity = GetAllCityCubit.get(context);
+
+                  return ConditionalBuilder(
+                      condition: cupitCity.cities.isEmpty,
+                      builder: (context) => const Center(
+                            child: CircularProgressIndicator(),
                           ),
-                        ),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            buildFilterText(),
-                            SizedBox(height: 20.h),
-                            buildCityRow(),
-                            buildFilterByCityNameListView(state.cities),
-                            SizedBox(height: 16.h),
-                            buildFilterNameRow('GOVERNORATE'),
-                            SizedBox(height: 16.h),
-                            buildFilterNameRow('SPECIALIZATION'),
-                            SizedBox(height: 16.h),
-                            MainButton(
-                              text: 'APPLY',
-                              onTap: () {
-                                cubit.filterDoctorByCityName(initValue!.id!);
-                                Navigator.of(context).pop();
-                              },
-                            )
-                          ],
-                        ),
-                      ),
-                    );
-                  } else if (state is GetAllDoctorsLoading) {
-                    return const Center(
-                        child: CustomCircularProgressIndicator());
-                  } else if (state is GetAllDoctorsError) {
-                    return const Text('Error');
-                  } else {
-                    return Container();
-                  }
+                      fallback: (context) {
+                        return Container(
+                          color: const Color(0xff757575),
+                          child: Container(
+                            padding: EdgeInsets.all(20.r),
+                            decoration: const BoxDecoration(
+                              color: Colors.white,
+                              borderRadius: BorderRadius.only(
+                                topLeft: Radius.circular(20.0),
+                                topRight: Radius.circular(20.0),
+                              ),
+                            ),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                buildFilterText(),
+                                SizedBox(height: 20.h),
+                                buildCityRow(),
+                                buildFilterByCityNameListView(
+                                    cupitCity.cities, cupitCity),
+                                SizedBox(height: 16.h),
+                                buildFilterNameRow('GOVERNORATE'),
+                                SizedBox(height: 16.h),
+                                buildFilterNameRow('SPECIALIZATION'),
+                                SizedBox(height: 16.h),
+                                MainButton(
+                                  text: 'APPLY',
+                                  onTap: () {
+                                    cubit.filterDoctorByCityName(
+                                        cupitCity.initCityValue.id!);
+                                    Navigator.of(context).pop();
+                                  },
+                                )
+                              ],
+                            ),
+                          ),
+                        );
+                      });
                 },
               ),
             );
@@ -150,16 +151,15 @@ class _DoctorsTabState extends State<DoctorsTab> {
     );
   }
 
-  Widget buildFilterByCityNameListView(List<City> cities) {
+  Widget buildFilterByCityNameListView(
+      List<City> cities, GetAllCityCubit cupit) {
     return SizedBox(
       height: 160.h,
       child: ListView.builder(
-        physics: const BouncingScrollPhysics(),
-        itemCount: cities.length,
-        itemBuilder: (context, index) => buildRadioButton(
-          cities[index],
-        ),
-      ),
+          physics: const BouncingScrollPhysics(),
+          itemCount: cities.length,
+          itemBuilder: (context, index) =>
+              buildRadioButton(cities[index], cupit)),
     );
   }
 
@@ -179,25 +179,21 @@ class _DoctorsTabState extends State<DoctorsTab> {
     );
   }
 
-  Widget buildRadioButton(City city) {
-    return Builder(builder: (context) {
-      return Row(
-        children: [
-          Radio(
-            value: initValue,
-            activeColor: ColorHelper.mainColor,
-            groupValue: city,
-            onChanged: (value) {
-              setState(() {
-                initValue = city;
-                print(initValue!.id);
-              });
-            },
-          ),
-          Text(city.name!),
-        ],
-      );
-    });
+  Widget buildRadioButton(City city, GetAllCityCubit cupit) {
+    return Row(
+      children: [
+        Radio<City?>(
+          value: city,
+          activeColor: ColorHelper.mainColor,
+          groupValue: cupit.initCityValue,
+          onChanged: (value) {
+            cupit.changeSelectedCity(city);
+            print(cupit.initCityValue.name);
+          },
+        ),
+        Text(city.name!),
+      ],
+    );
   }
 
   Widget buildCityRow() {

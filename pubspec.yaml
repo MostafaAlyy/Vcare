@@ -47,6 +47,7 @@ dependencies:
   http: ^1.1.0
   flutter_secure_storage: ^9.0.0
   fancy_shimmer_image: ^2.0.3
+  conditional_builder_null_safety: ^0.0.6
 
 
 dev_dependencies:

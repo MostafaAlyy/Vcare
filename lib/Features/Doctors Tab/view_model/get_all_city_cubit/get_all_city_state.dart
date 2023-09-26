@@ -14,3 +14,5 @@ class GetAllCitySuccess extends GetAllCityState {
 }
 
 class GetAllCityError extends GetAllCityState {}
+
+class ChangeSelectedCityState extends GetAllCityState {}

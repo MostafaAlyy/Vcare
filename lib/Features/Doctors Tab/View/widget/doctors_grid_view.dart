@@ -10,7 +10,7 @@ Widget buildDoctorsGridView(List<Doctors> doctor) {
     child: GridView.builder(
       gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
         crossAxisCount: 2,
-        childAspectRatio: 6 / 7,
+        childAspectRatio: 5 / 7,
         crossAxisSpacing: 2,
         mainAxisSpacing: 4,
       ),
@@ -19,7 +19,10 @@ Widget buildDoctorsGridView(List<Doctors> doctor) {
       padding: EdgeInsets.zero,
       itemCount: doctor.length,
       itemBuilder: (ctx, index) {
-        return buildDoctorItem(doctor[index]);
+        return Padding(
+          padding: const EdgeInsets.all(6.0),
+          child: buildDoctorItem(doctor[index]),
+        );
       },
     ),
   );
@@ -59,6 +62,7 @@ Widget buildDoctorItem(Doctors doctor) {
             ],
           ),
         ),
+        const Spacer(),
         buildMoreDetailsTextButton(),
       ],
     ),
