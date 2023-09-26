@@ -6,14 +6,17 @@ import 'Governrate.dart';
 
 class City {
   City({
-      this.id, 
-      this.name, 
-      this.governrate,});
+    this.id,
+    this.name,
+    this.governrate,
+  });
 
   City.fromJson(dynamic json) {
     id = json['id'];
     name = json['name'];
-    governrate = json['governrate'] != null ? Governrate.fromJson(json['governrate']) : null;
+    governrate = json['governrate'] != null
+        ? Governrate.fromJson(json['governrate'])
+        : null;
   }
   int? id;
   String? name;
@@ -28,5 +31,4 @@ class City {
     }
     return map;
   }
-
 }

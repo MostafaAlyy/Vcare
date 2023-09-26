@@ -16,8 +16,10 @@ class GetAllDoctorsCubit extends Cubit<GetAllDoctorsState> {
       BlocProvider.of(context);
 
   List<Doctors> doctors = [];
+
+  List<Doctors> filterDoctors = [];
+
   void getAllDoctors() {
-    doctors = [];
     emit(GetAllDoctorsLoading());
     DioHelper.getData(
             url: getAllDoctorsEndpoint, token: LoginCubit.userData.token)
@@ -25,7 +27,22 @@ class GetAllDoctorsCubit extends Cubit<GetAllDoctorsState> {
       for (var element in value.data['data']) {
         doctors.add(Doctors.fromJson(element));
       }
-      emit(GetAllDoctorsSuccess());
+      emit(GetAllDoctorsSuccess(doctors));
+    }).catchError((onError) {
+      emit(GetAllDoctorsError());
+    });
+  }
+
+  void filterDoctorByCityName(int cityId) {
+    emit(GetAllDoctorsLoading());
+    DioHelper.getData(
+        url: filerDoctorByCity, token: LoginCubit.userData.token , queryParameters: {'city'  : cityId})
+        .then((value) {
+      filterDoctors.clear();
+      for (var element in value.data['data']) {
+        filterDoctors.add(Doctors.fromJson(element));
+      }
+      emit(GetFilterDoctorsSuccess(filterDoctors));
     }).catchError((onError) {
       emit(GetAllDoctorsError());
     });

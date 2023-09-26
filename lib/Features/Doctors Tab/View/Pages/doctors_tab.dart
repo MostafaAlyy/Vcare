@@ -3,50 +3,127 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:vcare/Core/ColorHelper.dart';
+import 'package:vcare/Core/general_components/CustomCircularProgressIndicator.dart';
 import 'package:vcare/Core/general_components/main_button.dart';
+import 'package:vcare/Features/Doctors%20Tab/view_model/get_all_city_cubit/get_all_city_cubit.dart';
 import 'package:vcare/Features/Doctors%20Tab/view_model/get_all_doctors_cubit/get_all_doctors_cubit.dart';
+import '../../../History Tab/Model/Appointment.dart';
+import '../widget/doctors_grid_view.dart';
 
-import '../widget/Build_Filter_Bottom_Sheet.dart';
-
-class DoctorsTab extends StatelessWidget {
+class DoctorsTab extends StatefulWidget {
   const DoctorsTab({super.key});
 
-  final String imgUrl =
-      'https://www.reuters.com/resizer/O-QT-6JbJVpU9G3EnvL_xPDI5S0=/960x1200/smart/filters:quality(80)/cloudfront-us-east-2.images.arcpublishing.com/reuters/7NBXJ3TU5JL7NHRRJJDS3U3WDY.jpg';
+  @override
+  State<DoctorsTab> createState() => _DoctorsTabState();
+}
 
+class _DoctorsTabState extends State<DoctorsTab> {
+  City? initValue;
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
       create: (context) => GetAllDoctorsCubit()..getAllDoctors(),
       child: BlocConsumer<GetAllDoctorsCubit, GetAllDoctorsState>(
-        listener: (context, state) {
-          // TODO: implement listener
-        },
+        listener: (context, state) {},
         builder: (context, state) {
-          var cupit = GetAllDoctorsCubit.get(context);
-          return Padding(
-            padding: EdgeInsets.symmetric(horizontal: 8.r, vertical: 10.r),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                buildFilterContainer(context),
-                SizedBox(height: 12.h),
-                buildDoctorsGridView(),
-              ],
-            ),
-          );
+          var cubit = BlocProvider.of<GetAllDoctorsCubit>(context);
+          if (state is GetAllDoctorsSuccess) {
+            return Padding(
+              padding: EdgeInsets.symmetric(horizontal: 8.r, vertical: 10.r),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  buildFilterContainer(context, cubit),
+                  SizedBox(height: 12.h),
+                  buildDoctorsGridView(state.doctors),
+                ],
+              ),
+            );
+          }
+          if (state is GetFilterDoctorsSuccess) {
+            return Padding(
+              padding: EdgeInsets.symmetric(horizontal: 8.r, vertical: 10.r),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  buildFilterContainer(context, cubit),
+                  SizedBox(height: 12.h),
+                  buildDoctorsGridView(state.filterDoctors),
+                ],
+              ),
+            );
+          } else if (state is GetAllDoctorsLoading) {
+            return const Center(child: CustomCircularProgressIndicator());
+          } else if (state is GetAllDoctorsError) {
+            return const Text('Error');
+          } else {
+            return Container();
+          }
         },
       ),
     );
   }
 
-  Widget buildFilterContainer(context) {
+  Widget buildFilterContainer(context, GetAllDoctorsCubit cubit) {
     return GestureDetector(
       onTap: () {
         showModalBottomSheet(
+          constraints: BoxConstraints(maxHeight: 0.6.sh),
           isScrollControlled: true,
           context: context,
-          builder: (context) => const BuildFilterBottomSheet(),
+          builder: (context) {
+            return BlocProvider(
+              create: (context) => GetAllCityCubit()..getAllCity(),
+              child: BlocBuilder<GetAllCityCubit, GetAllCityState>(
+                builder: (context, state) {
+                  if (state is GetAllCitySuccess) {
+                    initValue = state.cities[0];
+                    return Container(
+                      color: const Color(0xff757575),
+                      child: Container(
+                        padding: EdgeInsets.all(20.r),
+                        decoration: const BoxDecoration(
+                          color: Colors.white,
+                          borderRadius: BorderRadius.only(
+                            topLeft: Radius.circular(20.0),
+                            topRight: Radius.circular(20.0),
+                          ),
+                        ),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            buildFilterText(),
+                            SizedBox(height: 20.h),
+                            buildCityRow(),
+                            buildFilterByCityNameListView(state.cities),
+                            SizedBox(height: 16.h),
+                            buildFilterNameRow('GOVERNORATE'),
+                            SizedBox(height: 16.h),
+                            buildFilterNameRow('SPECIALIZATION'),
+                            SizedBox(height: 16.h),
+                            MainButton(
+                              text: 'APPLY',
+                              onTap: () {
+                                cubit.filterDoctorByCityName(initValue!.id!);
+                                Navigator.of(context).pop();
+                              },
+                            )
+                          ],
+                        ),
+                      ),
+                    );
+                  } else if (state is GetAllDoctorsLoading) {
+                    return const Center(
+                        child: CustomCircularProgressIndicator());
+                  } else if (state is GetAllDoctorsError) {
+                    return const Text('Error');
+                  } else {
+                    return Container();
+                  }
+                },
+              ),
+            );
+          },
         );
       },
       child: Container(
@@ -73,92 +150,97 @@ class DoctorsTab extends StatelessWidget {
     );
   }
 
-  Widget buildDoctorsGridView() {
-    return Expanded(
-      child: GridView.builder(
-        gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-          crossAxisCount: 2,
-          childAspectRatio: 4 / 5,
-          crossAxisSpacing: 2,
-          mainAxisSpacing: 2,
+  Widget buildFilterByCityNameListView(List<City> cities) {
+    return SizedBox(
+      height: 160.h,
+      child: ListView.builder(
+        physics: const BouncingScrollPhysics(),
+        itemCount: cities.length,
+        itemBuilder: (context, index) => buildRadioButton(
+          cities[index],
         ),
-        shrinkWrap: true,
-        physics: const ClampingScrollPhysics(),
-        padding: EdgeInsets.zero,
-        itemCount: 6,
-        itemBuilder: (ctx, index) {
-          return buildDoctorItem();
-        },
       ),
     );
   }
 
-  Widget buildDoctorItem() {
-    return Container(
-      // height: 150.h,
-      // width: 145.w,
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(11),
-        border: Border.all(color: Colors.black),
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
+  Widget buildFilterNameRow(String name) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: [
+        Text(
+          name,
+          style: TextStyle(
+            fontSize: 18.sp,
+            fontWeight: FontWeight.w700,
+          ),
+        ),
+        const Icon(Icons.add)
+      ],
+    );
+  }
+
+  Widget buildRadioButton(City city) {
+    return Builder(builder: (context) {
+      return Row(
         children: [
-          buildDoctorImage(imgUrl),
-          Padding(
-            padding: EdgeInsets.symmetric(horizontal: 8.r, vertical: 5.r),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  'doctor',
-                  style:
-                      TextStyle(fontSize: 16.sp, fontWeight: FontWeight.w400),
-                ),
-                Text(
-                  'doctors.description!',
-                  style:
-                      TextStyle(fontSize: 16.sp, fontWeight: FontWeight.w400),
-                ),
-              ],
-            ),
+          Radio(
+            value: initValue,
+            activeColor: ColorHelper.mainColor,
+            groupValue: city,
+            onChanged: (value) {
+              setState(() {
+                initValue = city;
+                print(initValue!.id);
+              });
+            },
           ),
-          const Spacer(),
-          Padding(
-            padding: EdgeInsets.all(3.r),
-            child: buildMoreDetailsTextButton(),
-          ),
+          Text(city.name!),
         ],
-      ),
-    );
+      );
+    });
   }
 
-  Widget buildDoctorImage(String photo) {
-    return Container(
-      height: 100.h,
-      width: double.infinity,
-      decoration: BoxDecoration(
-        color: ColorHelper.mainColor,
-        borderRadius: BorderRadius.circular(10),
-      ),
-      child: ClipRRect(
-        borderRadius: BorderRadius.circular(10),
-        clipBehavior: Clip.antiAliasWithSaveLayer,
-        child: FancyShimmerImage(
-          width: double.infinity,
-          errorWidget: const Icon(Icons.error),
-          imageUrl: photo,
-          boxFit: BoxFit.fill,
+  Widget buildCityRow() {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: [
+        Text(
+          'City',
+          style: TextStyle(
+            fontSize: 18.sp,
+            fontWeight: FontWeight.w700,
+          ),
         ),
-      ),
+        const Spacer(),
+        Text(
+          'clear',
+          style: TextStyle(
+            color: Colors.grey,
+            fontSize: 16.sp,
+            fontWeight: FontWeight.w400,
+          ),
+        ),
+        SizedBox(width: 8.w),
+        const ImageIcon(
+          AssetImage('assets/Icons/minus.png'),
+        ),
+      ],
     );
   }
 
-  Widget buildMoreDetailsTextButton({VoidCallback? onPressed}) {
-    return TextButton.icon(
-      onPressed: onPressed,
-      icon: const Text('More Details'),
-      label: const Icon(Icons.arrow_right_alt_rounded),
+  Widget buildFilterText() {
+    return Row(
+      children: [
+        const Icon(Icons.filter_alt_outlined, color: ColorHelper.mainColor),
+        Text(
+          'Filter',
+          style: TextStyle(
+            color: ColorHelper.mainColor,
+            fontSize: 16.sp,
+            fontWeight: FontWeight.w400,
+          ),
+        ),
+      ],
     );
   }
 }
