@@ -1,11 +1,15 @@
+
 import 'package:fancy_shimmer_image/fancy_shimmer_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:vcare/Features/Home%20Tab/View/Pages/home_tab.dart';
+import 'package:vcare/Features/details_screen/view/pages/details_view.dart';
 
 import '../../../../Core/ColorHelper.dart';
+import '../../../History Tab/Model/Appointment.dart';
 import '../../../Home Tab/Model/Doctors.dart';
 
-Widget buildDoctorsGridView(List<Doctors> doctor) {
+Widget buildDoctorsGridView(List<Doctors> doctor,BuildContext context) {
   return Expanded(
     child: GridView.builder(
       gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
@@ -21,14 +25,14 @@ Widget buildDoctorsGridView(List<Doctors> doctor) {
       itemBuilder: (ctx, index) {
         return Padding(
           padding: const EdgeInsets.all(6.0),
-          child: buildDoctorItem(doctor[index]),
+          child: buildDoctorItem(doctor[index],context),
         );
       },
     ),
   );
 }
 
-Widget buildDoctorItem(Doctors doctor) {
+Widget buildDoctorItem(Doctors doctor,BuildContext context) {
   return Container(
     // height: 150.h,
     // width: 145.w,
@@ -63,7 +67,12 @@ Widget buildDoctorItem(Doctors doctor) {
           ),
         ),
         const Spacer(),
-        buildMoreDetailsTextButton(),
+        buildMoreDetailsTextButton(onPressed: (){
+          Navigator.of(context,rootNavigator: true)
+              .pushNamed(DetailsPage.routeName,
+          arguments: Arrgs(doctors: doctor)
+          );
+        }),
       ],
     ),
   );
@@ -96,4 +105,9 @@ Widget buildMoreDetailsTextButton({VoidCallback? onPressed}) {
     icon: const Text('More Details'),
     label: const Icon(Icons.arrow_right_alt_rounded),
   );
+}
+
+class Arguments{
+  Doctors doctor;
+  Arguments(this.doctor);
 }

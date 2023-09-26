@@ -100,7 +100,10 @@ class HomeTab extends StatelessWidget {
                                           '',
                                       onTap: () {
                                         Navigator.of(context,rootNavigator: true).pushNamed(DetailsPage.routeName,
-                                            arguments: Arrgs(
+                                            arguments:
+
+                                            Arrgs(
+
                                                 majorIndex: majorIndex,
                                                 doctorIndex:
                                                 doctorsIndex,
@@ -109,7 +112,9 @@ class HomeTab extends StatelessWidget {
                                                     .data![
                                                 majorIndex]
                                                     .doctors ??
-                                                    []));
+                                                    []
+
+                                        ));
                                       },
                                     );
                                   },
@@ -148,11 +153,14 @@ class Arrgs {
   int? doctorIndex;
   int? majorIndex;
   List<Doctors>? doctor;
+  Doctors? doctors;
+
 
   Arrgs(
       { this.majorIndex,
        this.doctorIndex,
-      required this.doctor,
+        this.doctor,
+       this.doctors,
       this.id});
 }
 
