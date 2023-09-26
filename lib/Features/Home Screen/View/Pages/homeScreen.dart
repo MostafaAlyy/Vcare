@@ -5,6 +5,7 @@ import 'package:vcare/Core/ColorHelper.dart';
 import 'package:vcare/Features/Account%20Tab/View/Pages/account_tab.dart';
 import 'package:vcare/Features/Doctors%20Tab/View/Pages/doctors_tab.dart';
 import 'package:vcare/Features/History%20Tab/View/Pages/history_tab.dart';
+import 'package:vcare/Features/SearchTab/View/Page/search_tab.dart';
 
 import '../../../Home Tab/View/Pages/home_tab.dart';
 
@@ -18,7 +19,6 @@ class HomeScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-
         iconTheme: const IconThemeData(color: Colors.white),
         backgroundColor: ColorHelper.mainColor,
         centerTitle: false,
@@ -62,7 +62,7 @@ class HomeScreen extends StatelessWidget {
   List<Widget> tabs = [
     const HomeTab(),
     const DoctorsTab(),
-    const HomeTab(),
+    SearchTab(),
     const HistoryTab(),
     const AccountTab(),
   ];

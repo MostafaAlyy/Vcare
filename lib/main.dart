@@ -39,24 +39,23 @@ class MyApp extends StatelessWidget {
         title: 'VCare',
         theme: ThemeData(
           datePickerTheme: const DatePickerThemeData(
-            headerBackgroundColor: ColorHelper.mainColor,
-            dividerColor: ColorHelper.mainColor,
-            rangeSelectionBackgroundColor: ColorHelper.mainColor,
-           surfaceTintColor: ColorHelper.mainColor,
-           todayBorder: BorderSide(color:ColorHelper.mainColor )
-          ),
+              headerBackgroundColor: ColorHelper.mainColor,
+              dividerColor: ColorHelper.mainColor,
+              rangeSelectionBackgroundColor: ColorHelper.mainColor,
+              surfaceTintColor: ColorHelper.mainColor,
+              todayBorder: BorderSide(color: ColorHelper.mainColor)),
           timePickerTheme: const TimePickerThemeData(
-            hourMinuteTextColor: Colors.white,
-            dayPeriodTextColor: ColorHelper.mainColor,
-            dialHandColor: ColorHelper.mainColor,
-            hourMinuteColor: ColorHelper.mainColor,
-            cancelButtonStyle: ButtonStyle(
-              backgroundColor: MaterialStatePropertyAll(ColorHelper.mainColor),
-            )
-          ),
+              hourMinuteTextColor: Colors.white,
+              dayPeriodTextColor: ColorHelper.mainColor,
+              dialHandColor: ColorHelper.mainColor,
+              hourMinuteColor: ColorHelper.mainColor,
+              cancelButtonStyle: ButtonStyle(
+                backgroundColor:
+                    MaterialStatePropertyAll(ColorHelper.mainColor),
+              )),
           primaryColor: ColorHelper.mainColor,
-             //useMaterial3: true,
-            ),
+          useMaterial3: true,
+        ),
         //home: const LoginPage(),
         initialRoute: SplashScreen.routeName,
         routes: {
@@ -64,9 +63,9 @@ class MyApp extends StatelessWidget {
           RegisterPage.routeName: (_) => const RegisterPage(),
           OnBoarding.routeName: (_) => const OnBoarding(),
           LoginPage.routeName: (_) => const LoginPage(),
-          DetailsPage.routeName: (_) =>  DetailsPage(),
+          DetailsPage.routeName: (_) => DetailsPage(),
           HomeScreen.routeName: (_) => HomeScreen(),
-          ViewMore.routeName : (_) => ViewMore()
+          ViewMore.routeName: (_) => const ViewMore()
         },
       ),
     );
