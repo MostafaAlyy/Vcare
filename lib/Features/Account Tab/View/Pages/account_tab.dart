@@ -6,6 +6,7 @@ import 'package:vcare/Features/History%20Tab/View/Pages/history_tab.dart';
 import 'package:vcare/Features/History%20Tab/ViewModel/history_cubit.dart';
 
 import '../../../History Tab/View/Components/appoiintmet_details_dialog.dart';
+import '../../../History Tab/View/Pages/appoinment_widget.dart';
 import '../../../History Tab/ViewModel/history_states.dart';
 import '../../../History Tab/ViewMoudel/cubit/history_cubit.dart';
 import '../../ViewModel/profile_cubit.dart';
@@ -58,7 +59,7 @@ class AccountTab extends StatelessWidget {
                           onPressed: () {},
                         ),
                       ),
-                      const Divider(),
+                      const Divider(color: Colors.black,),
                       const SizedBox(
                         height: 20,
                       ),
@@ -106,15 +107,23 @@ class AccountTab extends StatelessWidget {
             },
           ),
         ),
-        const Expanded(
-            child: Column(
+         Expanded(
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 15),
+              child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text('   History', style: TextStyle(fontSize: 24)),
-            Divider(),
-            Expanded(child: HistoryTab()),
+              Text('History', style: TextStyle(fontSize: 24)),
+              Container(
+                height: 1,
+                width: 55,
+                color: Colors.black,
+              ),
+              SizedBox(height: 20,),
+              Expanded(child: AppointmentWidget()),
           ],
-        ))
+        ),
+            ))
       ],
     );
   }

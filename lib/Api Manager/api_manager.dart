@@ -7,6 +7,7 @@ import 'package:vcare/Features/Home%20Tab/Model/HomeTabResponse.dart';
 
 import '../Features/Account Tab/Model/ProfileResponse.dart';
 import '../Features/History Tab/Model/HistoryResponse.dart';
+import '../Features/details_screen/Model/BookAppointmentResponse.dart';
 
 class ApiManager {
   static const String baseUrl = 'vcare.integration25.com';
@@ -41,5 +42,23 @@ class ApiManager {
 
     var historyResponse = HistoryResponse.fromJson(jsonDecode(request.body));
     return historyResponse;
+  }
+  static Future<BookAppointmentResponse> makeAppointment(
+      {required String token,
+      required int doctorid,
+        required String startTime,
+        String? note
+      }) async {
+    var uri = Uri.https(baseUrl, 'api/appointment/store');
+    var request = await http.post(uri,headers: {
+      HttpHeaders.authorizationHeader : "Bearer $token"
+    },body: {
+      'doctor_id' : "$doctorid",
+      'start_time' : startTime,
+      'notes' : note
+    });
+
+    var bookAppointmentResponse = BookAppointmentResponse.fromJson(jsonDecode(request.body));
+    return bookAppointmentResponse;
   }
 }
