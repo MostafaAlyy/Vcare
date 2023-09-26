@@ -15,7 +15,12 @@ static const String routeName = 'view-more';
     ViewMoreArgs arrg = ModalRoute.of(context)!.settings.arguments as ViewMoreArgs;
     return Scaffold(
       appBar: AppBar(
-        title: Text(arrg.specialization),
+        iconTheme: IconThemeData(
+          color: Colors.white
+        ),
+        title: Text(arrg.specialization,style: TextStyle(
+          color: Colors.white
+        ),),
         backgroundColor: ColorHelper.mainColor,
       ),
       body: BlocProvider(
@@ -38,7 +43,7 @@ static const String routeName = 'view-more';
                 gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                     crossAxisCount: 2,
                     //crossAxisSpacing: 20,
-                    mainAxisExtent: 230
+                    mainAxisExtent: 220
                 ),
                 itemBuilder: (context, index) {
                   return Padding(
