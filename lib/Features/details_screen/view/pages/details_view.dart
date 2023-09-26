@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:vcare/Core/general_components/main_button.dart';
+import 'package:vcare/Features/Doctors%20Tab/View/widget/doctors_grid_view.dart';
 import 'package:vcare/Features/details_screen/ViewModel/make_appointment_cubit.dart';
 
 import '../../../../Core/ColorHelper.dart';
@@ -41,7 +42,7 @@ class DetailsScreenBody extends StatelessWidget {
    @override
   Widget build(BuildContext context) {
     Arrgs arrgs = ModalRoute.of(context)!.settings.arguments as Arrgs;
-
+    //Arguments arg = ModalRoute.of(context)!.settings.arguments as Arguments;
     print(controller.text);
     return SingleChildScrollView(
       child: Form(
@@ -54,7 +55,7 @@ class DetailsScreenBody extends StatelessWidget {
               color: ColorHelper.mainColor,
               child: CachedNetworkImage(
                 fit: BoxFit.fill,
-                imageUrl: arrgs.doctor?[arrgs.doctorIndex??0].photo??'',
+                imageUrl: arrgs.doctor?[arrgs.doctorIndex??0].photo??arrgs.doctors?.photo??'',
                 placeholder: (context, url) => CircularProgressIndicator(),
                 errorWidget: (context, url, error) => Icon(Icons.error),
               ),
@@ -67,14 +68,14 @@ class DetailsScreenBody extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                   Text(arrgs.doctor?[arrgs.doctorIndex??0].name??'',
+                   Text(arrgs.doctor?[arrgs.doctorIndex??0].name??arrgs.doctors?.name??'',
                       style: TextStyle(
                         fontSize: 34,
                         fontWeight: FontWeight.w400,
                         color: ColorHelper.mainColor,
                       )),
                   Text(
-                    arrgs.doctor?[arrgs.doctorIndex??0].description??'',
+                    arrgs.doctor?[arrgs.doctorIndex??0].description??arrgs.doctors?.description??'',
                     style: TextStyle(
                       fontSize: 18.sp,
                       fontWeight: FontWeight.w400,
@@ -189,7 +190,8 @@ class DetailsScreenBody extends StatelessWidget {
 
 Widget buildConsumerBookButton({
    required BuildContext context,
-  required Arrgs arrgs,
+   Arrgs? arrgs,
+
   //required MakeAppointmentCubit cubit,
   }){
      return BlocConsumer<MakeAppointmentCubit, MakeAppointmentStates>(
@@ -249,7 +251,7 @@ Widget buildConsumerBookButton({
            text: 'Book an appointment',
            onTap: () {
              bookAppointment(
-                 doctorId:  arrgs.doctor?[arrgs.doctorIndex??0].id??-1,
+                 doctorId:  arrgs?.doctor?[arrgs.doctorIndex??0].id??arrgs?.doctors?.id??-1,
                  startTime: timeController.text,
                  note: noteController.text
              );

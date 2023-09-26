@@ -35,7 +35,7 @@ class _DoctorsTabState extends State<DoctorsTab> {
                 children: [
                   buildFilterContainer(context, cubit),
                   SizedBox(height: 12.h),
-                  buildDoctorsGridView(state.doctors),
+                  buildDoctorsGridView(state.doctors,context),
                 ],
               ),
             );
@@ -48,7 +48,7 @@ class _DoctorsTabState extends State<DoctorsTab> {
                 children: [
                   buildFilterContainer(context, cubit),
                   SizedBox(height: 12.h),
-                  buildDoctorsGridView(state.filterDoctors),
+                  buildDoctorsGridView(state.filterDoctors,context),
                 ],
               ),
             );
