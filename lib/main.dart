@@ -3,6 +3,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'package:vcare/Core/ColorHelper.dart';
 import 'package:vcare/Core/Database/remote/DioHelper/dio_helper.dart';
 import 'package:vcare/Features/Auth/View/Pages/register.dart';
 import 'package:vcare/Features/Auth/ViewModel/login_cubit/login_cubit.dart';
@@ -36,7 +37,24 @@ class MyApp extends StatelessWidget {
         debugShowCheckedModeBanner: false,
         title: 'VCare',
         theme: ThemeData(
-            // useMaterial3: true,
+          datePickerTheme: const DatePickerThemeData(
+            headerBackgroundColor: ColorHelper.mainColor,
+            dividerColor: ColorHelper.mainColor,
+            rangeSelectionBackgroundColor: ColorHelper.mainColor,
+           surfaceTintColor: ColorHelper.mainColor,
+           todayBorder: BorderSide(color:ColorHelper.mainColor )
+          ),
+          timePickerTheme: const TimePickerThemeData(
+            hourMinuteTextColor: Colors.white,
+            dayPeriodTextColor: ColorHelper.mainColor,
+            dialHandColor: ColorHelper.mainColor,
+            hourMinuteColor: ColorHelper.mainColor,
+            cancelButtonStyle: ButtonStyle(
+              backgroundColor: MaterialStatePropertyAll(ColorHelper.mainColor),
+            )
+          ),
+          primaryColor: ColorHelper.mainColor,
+             //useMaterial3: true,
             ),
         //home: const LoginPage(),
         initialRoute: SplashScreen.routeName,
