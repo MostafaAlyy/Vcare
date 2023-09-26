@@ -8,6 +8,7 @@ import 'package:vcare/Core/Database/remote/DioHelper/dio_helper.dart';
 import 'package:vcare/Features/Auth/View/Pages/register.dart';
 import 'package:vcare/Features/Auth/ViewModel/login_cubit/login_cubit.dart';
 import 'package:vcare/Features/Home%20Screen/View/Pages/homeScreen.dart';
+import 'package:vcare/Features/Home%20Tab/View/Pages/view_more.dart';
 import 'package:vcare/Features/Splash%20Screen/splash_screen.dart';
 
 import 'Features/Auth/View/Pages/login.dart';
@@ -64,7 +65,8 @@ class MyApp extends StatelessWidget {
           OnBoarding.routeName: (_) => const OnBoarding(),
           LoginPage.routeName: (_) => const LoginPage(),
           DetailsPage.routeName: (_) =>  DetailsPage(),
-          HomeScreen.routeName: (_) => HomeScreen()
+          HomeScreen.routeName: (_) => HomeScreen(),
+          ViewMore.routeName : (_) => ViewMore()
         },
       ),
     );

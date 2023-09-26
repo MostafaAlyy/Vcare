@@ -4,11 +4,13 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:vcare/Core/ColorHelper.dart';
+import 'package:vcare/Features/Home%20Tab/View/Pages/view_more.dart';
 import 'package:vcare/Features/Home%20Tab/ViewModel/Cubit/home_states.dart';
 
 import '../../../details_screen/view/pages/details_view.dart';
 import '../../Model/Doctors.dart';
 import '../../ViewModel/Cubit/home_cubit.dart';
+import '../component/doctor_card.dart';
 
 class HomeTab extends StatelessWidget {
   const HomeTab({super.key});
@@ -49,7 +51,14 @@ class HomeTab extends StatelessWidget {
                                     style: const TextStyle(fontSize: 20),
                                   ),
                                   TextButton.icon(
-                                    onPressed: () {},
+                                    onPressed: () {
+                                      Navigator.of(context,rootNavigator: true).
+                                      pushNamed(ViewMore.routeName,
+                                          arguments: ViewMoreArgs(
+                                              id: state.homeTabResponse.data![majorIndex].id??-1,
+                                            specialization: state.homeTabResponse.data?[majorIndex].name??''
+                                          ));
+                                    },
                                     icon: const Text('More Details'),
                                     label: const Icon(
                                         Icons.arrow_right_alt_rounded),
@@ -70,104 +79,38 @@ class HomeTab extends StatelessWidget {
                                           .data?[majorIndex].doctors?.length ??
                                       0,
                                   itemBuilder: (context, doctorsIndex) {
-                                    return Container(
-                                      height: 210,
-                                      width: 150,
-                                      decoration: BoxDecoration(
-                                          borderRadius:
-                                              BorderRadius.circular(11),
-                                          border:
-                                              Border.all(color: Colors.black)),
-                                      child: Column(
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
-                                        children: [
-                                          Container(
-                                            height: 100,
-                                            width: 150,
-                                            decoration: BoxDecoration(
-                                              color: ColorHelper.mainColor,
-                                              borderRadius:
-                                                  BorderRadius.circular(10),
-                                            ),
-                                            child: ClipRRect(
-                                              borderRadius:
-                                                  BorderRadius.circular(10),
-                                              clipBehavior:
-                                                  Clip.antiAliasWithSaveLayer,
-                                              child: CachedNetworkImage(
-                                                fit: BoxFit.fill,
-                                                imageUrl: state
+                                    return DoctorCard(
+                                      imagePath: state
+                                          .homeTabResponse
+                                          .data![majorIndex]
+                                          .doctors![doctorsIndex]
+                                          .photo!,
+                                      doctorName:  state
+                                          .homeTabResponse
+                                          .data?[majorIndex]
+                                          .doctors?[
+                                      doctorsIndex]
+                                          .name??'',
+                                      degree: state
+                                          .homeTabResponse
+                                          .data?[majorIndex]
+                                          .doctors?[
+                                      doctorsIndex]
+                                          .degree ??
+                                          '',
+                                      onTap: () {
+                                        Navigator.of(context,rootNavigator: true).pushNamed(DetailsPage.routeName,
+                                            arguments: Arrgs(
+                                                majorIndex: majorIndex,
+                                                doctorIndex:
+                                                doctorsIndex,
+                                                doctor: state
                                                     .homeTabResponse
-                                                    .data![majorIndex]
-                                                    .doctors![doctorsIndex]
-                                                    .photo!,
-                                                placeholder: (context, url) =>
-                                                    const CircularProgressIndicator(),
-                                                errorWidget:
-                                                    (context, url, error) =>
-                                                        const Icon(Icons.error),
-                                              ),
-                                            ),
-                                          ),
-                                          Padding(
-                                            padding: const EdgeInsets.symmetric(
-                                                horizontal: 8.0, vertical: 5),
-                                            child: Column(
-                                              crossAxisAlignment:
-                                                  CrossAxisAlignment.start,
-                                              children: [
-                                                Text(
-                                                  state
-                                                          .homeTabResponse
-                                                          .data?[majorIndex]
-                                                          .doctors?[
-                                                              doctorsIndex]
-                                                          .name ??
-                                                      '',
-                                                  style: const TextStyle(
-                                                      fontWeight:
-                                                          FontWeight.w700,
-                                                      fontSize: 16),
-                                                ),
-                                                Text(
-                                                  state
-                                                          .homeTabResponse
-                                                          .data?[majorIndex]
-                                                          .doctors?[
-                                                              doctorsIndex]
-                                                          .degree ??
-                                                      '',
-                                                  style: const TextStyle(
-                                                      fontSize: 12),
-                                                ),
-                                              ],
-                                            ),
-                                          ),
-                                          const Spacer(),
-                                          Padding(
-                                            padding: const EdgeInsets.all(3.0),
-                                            child: TextButton.icon(
-                                              onPressed: () {
-                                                Navigator.of(context,rootNavigator: true).pushNamed(DetailsPage.routeName,
-                                                    arguments: Arrgs(
-                                                        majorIndex: majorIndex,
-                                                        doctorIndex:
-                                                            doctorsIndex,
-                                                        Doctor: state
-                                                                .homeTabResponse
-                                                                .data![
-                                                                    majorIndex]
-                                                                .doctors ??
-                                                            []));
-                                              },
-                                              icon: const Text('More Details'),
-                                              label: const Icon(Icons
-                                                  .arrow_right_alt_rounded),
-                                            ),
-                                          ),
-                                        ],
-                                      ),
+                                                    .data![
+                                                majorIndex]
+                                                    .doctors ??
+                                                    []));
+                                      },
                                     );
                                   },
                                 ),
@@ -198,15 +141,24 @@ class HomeTab extends StatelessWidget {
   }
 }
 
+
+
 class Arrgs {
   int? id;
-  int doctorIndex;
-  int majorIndex;
-  List<Doctors> Doctor;
+  int? doctorIndex;
+  int? majorIndex;
+  List<Doctors>? doctor;
 
   Arrgs(
-      {required this.majorIndex,
-      required this.doctorIndex,
-      required this.Doctor,
+      { this.majorIndex,
+       this.doctorIndex,
+      required this.doctor,
       this.id});
+}
+
+
+class ViewMoreArgs{
+  int id;
+  String specialization;
+  ViewMoreArgs({required this.id,required this.specialization});
 }
