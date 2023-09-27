@@ -9,11 +9,12 @@ import '../../../History Tab/View/Components/appoiintmet_details_dialog.dart';
 import '../../../History Tab/View/Pages/appoinment_widget.dart';
 import '../../../History Tab/ViewModel/history_states.dart';
 import '../../../History Tab/ViewMoudel/cubit/history_cubit.dart';
+import '../../../Update Profile/View/Pages/update_profile.dart';
 import '../../ViewModel/profile_cubit.dart';
 
 class AccountTab extends StatelessWidget {
   const AccountTab({super.key});
-
+static const String routeName = 'profile';
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -56,7 +57,9 @@ class AccountTab extends StatelessWidget {
                           icon: const Text('Edit Account Details',
                               style:
                                   TextStyle(fontSize: 18, color: Colors.grey)),
-                          onPressed: () {},
+                          onPressed: () {
+                            Navigator.of(context,rootNavigator: true).pushNamed(UpdatePage.routeName);
+                          },
                         ),
                       ),
                       const Divider(color: Colors.black,),

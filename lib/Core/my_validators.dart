@@ -40,4 +40,14 @@ class MyValidators {
     }
     return null;
   }
+
+
+  static String? phoneValidator(String? value) {
+    if (value!.isEmpty) {
+      return 'Please enter a phone number';
+    }
+    return null;
+  }
+
+
 }
