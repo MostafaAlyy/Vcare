@@ -37,6 +37,7 @@ class HomeTab extends StatelessWidget {
                       // height: double.infinity,
                       // width: double.infinity,
                       child: ListView.separated(
+                        physics: const BouncingScrollPhysics(),
                         shrinkWrap: true,
                         itemBuilder: (context, majorIndex) {
                           return Column(
@@ -74,9 +75,11 @@ class HomeTab extends StatelessWidget {
                                 ],
                               ),
                               SizedBox(
-                                height: 240,
+                                height:
+                                    MediaQuery.of(context).size.height * 0.25,
                                 width: double.infinity,
                                 child: ListView.separated(
+                                  physics: const BouncingScrollPhysics(),
                                   shrinkWrap: true,
                                   separatorBuilder: (context, index) =>
                                       const SizedBox(
