@@ -11,12 +11,14 @@ import 'package:vcare/Features/Home%20Screen/View/Pages/homeScreen.dart';
 import 'package:vcare/Features/Home%20Tab/View/Pages/view_more.dart';
 import 'package:vcare/Features/Splash%20Screen/splash_screen.dart';
 
+import 'Core/Database/local_database/shared_preferences.dart';
 import 'Features/Auth/View/Pages/login.dart';
 import 'Features/details_screen/view/pages/details_view.dart';
 import 'Features/onboarding/View/Pages/onboarding.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  await CacheData.cacheInitialization();
   await DioHelper.init();
 
   await const FlutterSecureStorage().read(key: 'token').then((value) {
@@ -54,7 +56,6 @@ class MyApp extends StatelessWidget {
                     MaterialStatePropertyAll(ColorHelper.mainColor),
               )),
           primaryColor: ColorHelper.mainColor,
-          useMaterial3: true,
         ),
         //home: const LoginPage(),
         initialRoute: SplashScreen.routeName,
@@ -65,7 +66,7 @@ class MyApp extends StatelessWidget {
           LoginPage.routeName: (_) => const LoginPage(),
           DetailsPage.routeName: (_) => DetailsPage(),
           HomeScreen.routeName: (_) => HomeScreen(),
-          ViewMore.routeName: (_) => const ViewMore()
+          ViewMore.routeName : (_) => const ViewMore()
         },
       ),
     );

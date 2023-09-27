@@ -19,6 +19,7 @@ class DoctorsTab extends StatefulWidget {
 }
 
 class _DoctorsTabState extends State<DoctorsTab> {
+  bool isFilter = false;
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
@@ -28,6 +29,7 @@ class _DoctorsTabState extends State<DoctorsTab> {
         builder: (context, state) {
           var cubit = BlocProvider.of<GetAllDoctorsCubit>(context);
           if (state is GetAllDoctorsSuccess) {
+            isFilter = false;
             return Padding(
               padding: EdgeInsets.symmetric(horizontal: 8.r, vertical: 10.r),
               child: Column(
@@ -41,6 +43,7 @@ class _DoctorsTabState extends State<DoctorsTab> {
             );
           }
           if (state is GetFilterDoctorsSuccess) {
+            isFilter = true;
             return Padding(
               padding: EdgeInsets.symmetric(horizontal: 8.r, vertical: 10.r),
               child: Column(
@@ -98,7 +101,7 @@ class _DoctorsTabState extends State<DoctorsTab> {
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                buildFilterText(),
+                                buildFilterText(cubit),
                                 SizedBox(height: 20.h),
                                 buildCityRow(),
                                 buildFilterByCityNameListView(
@@ -148,6 +151,31 @@ class _DoctorsTabState extends State<DoctorsTab> {
           ],
         ),
       ),
+    );
+  }
+
+  Widget buildFilterText(GetAllDoctorsCubit cubit) {
+    return Row(
+      children: [
+        const Icon(Icons.filter_alt_outlined, color: ColorHelper.mainColor),
+        Text(
+          'Filter',
+          style: TextStyle(
+            color: ColorHelper.mainColor,
+            fontSize: 16.sp,
+            fontWeight: FontWeight.w400,
+          ),
+        ),
+        const Spacer(),
+        if (isFilter)
+          SizedBox(
+            height: 34.h,
+            child: TextButton(
+              onPressed: () => cubit.cancelFilter(),
+              child: const Text('Cancel Filter'),
+            ),
+          ),
+      ],
     );
   }
 
@@ -224,19 +252,5 @@ class _DoctorsTabState extends State<DoctorsTab> {
     );
   }
 
-  Widget buildFilterText() {
-    return Row(
-      children: [
-        const Icon(Icons.filter_alt_outlined, color: ColorHelper.mainColor),
-        Text(
-          'Filter',
-          style: TextStyle(
-            color: ColorHelper.mainColor,
-            fontSize: 16.sp,
-            fontWeight: FontWeight.w400,
-          ),
-        ),
-      ],
-    );
-  }
+
 }

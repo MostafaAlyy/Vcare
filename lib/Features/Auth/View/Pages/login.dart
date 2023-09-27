@@ -139,20 +139,14 @@ class _LoginPageState extends State<LoginPage> {
   }
 
   Widget buildRegisterHereRichText() {
-    return RichText(
-      text: TextSpan(
-        text: 'No account yet?   ',
-        style: TextStyle(
-            color: Colors.grey, fontWeight: FontWeight.w400, fontSize: 14.sp),
-        children: [
-          TextSpan(
-            text: 'Register here.',
-            recognizer: TapGestureRecognizer()
-              ..onTap =
-                  () => Navigator.of(context).pushNamed(RegisterPage.routeName),
-          )
-        ],
-      ),
+    return Row(
+      children: [
+        const Text('No account yet?'),
+        TextButton(
+            onPressed: () =>
+                Navigator.of(context).pushNamed(RegisterPage.routeName),
+            child: const Text('Register hare'))
+      ],
     );
   }
 

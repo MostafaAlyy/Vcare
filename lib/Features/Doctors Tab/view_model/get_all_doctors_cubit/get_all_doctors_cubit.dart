@@ -33,6 +33,10 @@ class GetAllDoctorsCubit extends Cubit<GetAllDoctorsState> {
     });
   }
 
+  void cancelFilter(){
+    emit(GetAllDoctorsSuccess(doctors));
+  }
+
   void filterDoctorByCityName(int cityId) {
     emit(GetAllDoctorsLoading());
     DioHelper.getData(
