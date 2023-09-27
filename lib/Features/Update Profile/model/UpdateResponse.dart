@@ -7,10 +7,11 @@ import 'Data.dart';
 
 class UpdateResponse {
   UpdateResponse({
-      this.message, 
-      this.data, 
-      this.status, 
-      this.code,});
+    this.message,
+    this.data,
+    this.status,
+    this.code,
+  });
 
   UpdateResponse.fromJson(dynamic json) {
     message = json['message'];
@@ -33,5 +34,4 @@ class UpdateResponse {
     map['code'] = code;
     return map;
   }
-
 }

@@ -24,12 +24,13 @@ class _UpdatePageState extends State<UpdatePage> {
   final TextEditingController nameController = TextEditingController(text: '');
   final TextEditingController emailController = TextEditingController(text: '');
   final TextEditingController phoneController = TextEditingController(text: '');
-  final TextEditingController passwordController = TextEditingController(text: '');
+  final TextEditingController passwordController =
+      TextEditingController(text: '');
   final TextEditingController passwordConfirmController =
-  TextEditingController();
+      TextEditingController();
   bool male = true;
   var formKey = GlobalKey<FormState>();
-    var passwordKey = GlobalKey<FormState>();
+  var passwordKey = GlobalKey<FormState>();
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
@@ -39,7 +40,7 @@ class _UpdatePageState extends State<UpdatePage> {
           // TODO: implement listener
           if (state is UpdateSuccessState) {
             Fluttertoast.showToast(
-                msg: state.updateResponse.message??'',
+                msg: state.updateResponse,
                 toastLength: Toast.LENGTH_LONG,
                 gravity: ToastGravity.BOTTOM,
                 timeInSecForIosWeb: 1,
@@ -70,7 +71,8 @@ class _UpdatePageState extends State<UpdatePage> {
                             "Update details!",
                             style: TextStyle(
                                 fontSize:
-                                MediaQuery.of(context).textScaleFactor * 38),
+                                    MediaQuery.of(context).textScaleFactor *
+                                        38),
                           ),
                         ),
                         const SizedBox(
@@ -82,7 +84,7 @@ class _UpdatePageState extends State<UpdatePage> {
                           style: TextStyle(
                               color: Colors.grey,
                               fontSize:
-                              MediaQuery.of(context).textScaleFactor * 22),
+                                  MediaQuery.of(context).textScaleFactor * 22),
                         ),
                         const SizedBox(
                           height: 20,
@@ -127,85 +129,105 @@ class _UpdatePageState extends State<UpdatePage> {
                           height: 20,
                         ),
                         TextButton(
-                            onPressed: (){
+                            onPressed: () {
                               showDialog(
                                 barrierDismissible: false,
-                                  context: context,
-                                  builder: (context) {
-                                    return Dialog(
-
-                                      child: SizedBox(
-                                        height: MediaQuery.of(context).size.height*.3,
-                                        child: Padding(
-                                          padding: const EdgeInsets.all(15.0),
-                                          child: Form(
-                                            key: passwordKey,
-                                            child: Column(
-                                              children: [
-                                                TextFormField(
-                                                  validator: (value) =>
-                                                      MyValidators.passwordValidator(value),
-                                                  controller: passwordController,
-                                                  keyboardType: TextInputType.emailAddress,
-                                                  decoration: const InputDecoration(
-                                                    enabledBorder: OutlineInputBorder(),
-                                                    labelText: "Password",
-                                                  ),
+                                context: context,
+                                builder: (context) {
+                                  return Dialog(
+                                    child: SizedBox(
+                                      height:
+                                          MediaQuery.of(context).size.height *
+                                              .3,
+                                      child: Padding(
+                                        padding: const EdgeInsets.all(15.0),
+                                        child: Form(
+                                          key: passwordKey,
+                                          child: Column(
+                                            children: [
+                                              TextFormField(
+                                                validator: (value) =>
+                                                    MyValidators
+                                                        .passwordValidator(
+                                                            value),
+                                                controller: passwordController,
+                                                keyboardType:
+                                                    TextInputType.emailAddress,
+                                                decoration:
+                                                    const InputDecoration(
+                                                  enabledBorder:
+                                                      OutlineInputBorder(),
+                                                  labelText: "Password",
                                                 ),
-                                                const SizedBox(
-                                                  height: 20,
+                                              ),
+                                              const SizedBox(
+                                                height: 20,
+                                              ),
+                                              TextFormField(
+                                                validator: (value) => MyValidators
+                                                    .repeatPasswordValidator(
+                                                        password:
+                                                            passwordController
+                                                                .text,
+                                                        value: value),
+                                                controller:
+                                                    passwordConfirmController,
+                                                keyboardType:
+                                                    TextInputType.emailAddress,
+                                                decoration:
+                                                    const InputDecoration(
+                                                  enabledBorder:
+                                                      OutlineInputBorder(),
+                                                  labelText: "Confirm Password",
                                                 ),
-                                                TextFormField(
-                                                  validator: (value) =>
-                                                      MyValidators.repeatPasswordValidator(
-                                                          password: passwordController.text,
-                                                          value: value),
-                                                  controller: passwordConfirmController,
-                                                  keyboardType: TextInputType.emailAddress,
-                                                  decoration: const InputDecoration(
-                                                    enabledBorder: OutlineInputBorder(),
-                                                    labelText: "Confirm Password",
-                                                  ),
-                                                ),
-                                                Spacer(),
-                                                Row(
-                                                  mainAxisAlignment: MainAxisAlignment.spaceAround,
-                                                  children: [
-                                                    TextButton(
-                                                        onPressed: (){
-                                                         passwordController.clear();
-                                                         passwordConfirmController.clear();
-                                                          Navigator.pop(context);
-                                                        },
-                                                        child: Text('Cancel',style: TextStyle(
-                                                          color: Colors.red,
-                                                          fontSize: 20
-                                                        ),)),
-                                                    TextButton(
-                                                        onPressed: (){
-                                                          if (passwordKey.currentState?.validate() == false) {
-                                                            return;
-                                                          }
-                                                          Navigator.pop(context);
-                                                        },
-                                                        child: Text('Ok',style: TextStyle(
-
-                                                            fontSize: 20
-                                                        ),)),
-                                                  ],
-                                                )
-
-                                              ],
-                                            ),
+                                              ),
+                                              const Spacer(),
+                                              Row(
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment
+                                                        .spaceAround,
+                                                children: [
+                                                  TextButton(
+                                                      onPressed: () {
+                                                        passwordController
+                                                            .clear();
+                                                        passwordConfirmController
+                                                            .clear();
+                                                        Navigator.pop(context);
+                                                      },
+                                                      child: const Text(
+                                                        'Cancel',
+                                                        style: TextStyle(
+                                                            color: Colors.red,
+                                                            fontSize: 20),
+                                                      )),
+                                                  TextButton(
+                                                      onPressed: () {
+                                                        if (passwordKey
+                                                                .currentState
+                                                                ?.validate() ==
+                                                            false) {
+                                                          return;
+                                                        }
+                                                        Navigator.pop(context);
+                                                      },
+                                                      child: const Text(
+                                                        'Ok',
+                                                        style: TextStyle(
+                                                            fontSize: 20),
+                                                      )),
+                                                ],
+                                              )
+                                            ],
                                           ),
                                         ),
                                       ),
-                                    );
-                                  },);
+                                    ),
+                                  );
+                                },
+                              );
                             },
-                            child: const Text('Change password?')
-                        ),
-
+                            child: const Text('Change password?')),
                         const SizedBox(
                           height: 10,
                         ),
@@ -231,7 +253,7 @@ class _UpdatePageState extends State<UpdatePage> {
                                   style: TextStyle(
                                       color: Colors.black,
                                       fontSize: MediaQuery.of(context)
-                                          .textScaleFactor *
+                                              .textScaleFactor *
                                           18),
                                 )
                               ],
@@ -259,14 +281,13 @@ class _UpdatePageState extends State<UpdatePage> {
                                   style: TextStyle(
                                       color: Colors.black,
                                       fontSize: MediaQuery.of(context)
-                                          .textScaleFactor *
+                                              .textScaleFactor *
                                           18),
                                 )
                               ],
                             ),
                           ],
                         ),
-
                         buildBlocConsumerMainButton(cupit)
                       ],
                     ),
@@ -280,15 +301,14 @@ class _UpdatePageState extends State<UpdatePage> {
     );
   }
 
-
   Widget buildBlocConsumerMainButton(UpdateCubit cubit) {
     return BlocConsumer<UpdateCubit, UpdateState>(
       listener: (context, state) {
         if (state is UpdateSuccessState) {
-          buildShowToast(state.updateResponse.message??'');
+          buildShowToast(state.updateResponse);
         }
         if (state is UpdateErrorState) {
-          buildShowToast(state.message??'');
+          buildShowToast(state.message ?? '');
         }
       },
       builder: (context, state) {
@@ -313,10 +333,7 @@ class _UpdatePageState extends State<UpdatePage> {
           phone: phoneController.text,
           gender: (male) ? 0 : 1,
           password: passwordController.text,
-          passwordConfirmation:
-          passwordConfirmController.text
-      );
+          passwordConfirmation: passwordConfirmController.text);
     }
   }
-
 }

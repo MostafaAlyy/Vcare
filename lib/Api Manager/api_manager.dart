@@ -1,4 +1,3 @@
-
 import 'dart:convert';
 import 'dart:io';
 import 'package:http/http.dart' as http;
@@ -14,97 +13,99 @@ import '../Features/details_screen/Model/BookAppointmentResponse.dart';
 class ApiManager {
   static const String baseUrl = 'vcare.integration25.com';
 
-
-  static Future<HomeTabResponse> getHomeData(
-      {required String token}) async {
+  static Future<HomeTabResponse> getHomeData({required String token}) async {
     var uri = Uri.https(baseUrl, 'api/home/index');
-    var request = await http.get(uri,headers: {
-      HttpHeaders.authorizationHeader : "Bearer $token"
-    },);
+    var request = await http.get(
+      uri,
+      headers: {HttpHeaders.authorizationHeader: "Bearer $token"},
+    );
 
     var loginResponse = HomeTabResponse.fromJson(jsonDecode(request.body));
     return loginResponse;
   }
-  static Future<ProfileResponse> getProfileData(
-      {required String token}) async {
+
+  static Future<ProfileResponse> getProfileData({required String token}) async {
     var uri = Uri.https(baseUrl, 'api/user/profile');
-    var request = await http.get(uri,headers: {
-      HttpHeaders.authorizationHeader : "Bearer $token"
-    },);
+    var request = await http.get(
+      uri,
+      headers: {HttpHeaders.authorizationHeader: "Bearer $token"},
+    );
 
     var profileResponse = ProfileResponse.fromJson(jsonDecode(request.body));
     return profileResponse;
   }
-  static Future<HistoryResponse> getHistoryData(
-      {required String token}) async {
+
+  static Future<HistoryResponse> getHistoryData({required String token}) async {
     var uri = Uri.https(baseUrl, 'api/appointment/index');
-    var request = await http.get(uri,headers: {
-      HttpHeaders.authorizationHeader : "Bearer $token"
-    },);
+    var request = await http.get(
+      uri,
+      headers: {HttpHeaders.authorizationHeader: "Bearer $token"},
+    );
 
     var historyResponse = HistoryResponse.fromJson(jsonDecode(request.body));
     return historyResponse;
   }
+
   static Future<BookAppointmentResponse> makeAppointment(
       {required String token,
       required int doctorid,
-        required String startTime,
-        String? note
-      }) async {
+      required String startTime,
+      String? note}) async {
     var uri = Uri.https(baseUrl, 'api/appointment/store');
-    var request = await http.post(uri,headers: {
-      HttpHeaders.authorizationHeader : "Bearer $token"
-    },body: {
-      'doctor_id' : "$doctorid",
-      'start_time' : startTime,
-      'notes' : note
+    var request = await http.post(uri, headers: {
+      HttpHeaders.authorizationHeader: "Bearer $token"
+    }, body: {
+      'doctor_id': "$doctorid",
+      'start_time': startTime,
+      'notes': note
     });
 
-    var bookAppointmentResponse = BookAppointmentResponse.fromJson(jsonDecode(request.body));
+    var bookAppointmentResponse =
+        BookAppointmentResponse.fromJson(jsonDecode(request.body));
     return bookAppointmentResponse;
   }
 
-
-
   static Future<ViewMoreResponse> getViewAllData(
-      {required String token,required int id}) async {
+      {required String token, required int id}) async {
     var uri = Uri.https(baseUrl, 'api/specialization/show/$id');
-    var request = await http.get(uri,headers: {
-      HttpHeaders.authorizationHeader : "Bearer $token"
-    },);
+    var request = await http.get(
+      uri,
+      headers: {HttpHeaders.authorizationHeader: "Bearer $token"},
+    );
 
     var loginResponse = ViewMoreResponse.fromJson(jsonDecode(request.body));
     return loginResponse;
   }
 
-
-
-
   static Future<UpdateResponse> updateData(
       {required String token,
       required String name,
-        required String email,
-        required String phone,
-         String? password,
-         String? passwordConfirmation,
-        required int gender
-      }) async {
+      required String email,
+      required String phone,
+      String? password,
+      String? passwordConfirmation,
+      required int gender}) async {
+    print(password);
     var uri = Uri.https(baseUrl, 'api/user/update');
-    var request = await http.post(uri,headers: {
-      HttpHeaders.authorizationHeader : "Bearer $token"
-    },body: {
-      'name': name,
-      'email': email,
-      'phone': phone,
-      'gender': "$gender",
-      'password': password,
-      'password_confirmation': passwordConfirmation,
-    });
+    var request = await http.post(uri,
+        headers: {HttpHeaders.authorizationHeader: "Bearer $token"},
+        body: (password != null && password != '')
+            ? {
+                'name': name,
+                'email': email,
+                'phone': phone,
+                'gender': "$gender",
+                'password': password,
+                'password_confirmation': passwordConfirmation,
+              }
+            : {
+                'name': name,
+                'email': email,
+                'phone': phone,
+                'gender': "$gender",
+              });
 
     var updateResponse = UpdateResponse.fromJson(jsonDecode(request.body));
     return updateResponse;
   }
-
-
-
 }

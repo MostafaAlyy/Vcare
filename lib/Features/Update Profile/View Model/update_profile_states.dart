@@ -5,9 +5,11 @@ import '../model/UpdateResponse.dart';
 sealed class UpdateState {}
 
 class UpdateInitial extends UpdateState {}
+
 class UpdateLoading extends UpdateState {}
+
 class UpdateSuccessState extends UpdateState {
-  UpdateResponse updateResponse;
+  String updateResponse;
   UpdateSuccessState(this.updateResponse);
 }
 
