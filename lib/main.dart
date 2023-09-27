@@ -5,6 +5,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:vcare/Core/ColorHelper.dart';
 import 'package:vcare/Core/Database/remote/DioHelper/dio_helper.dart';
+import 'package:vcare/Features/Account%20Tab/View/Pages/account_tab.dart';
 import 'package:vcare/Features/Auth/View/Pages/register.dart';
 import 'package:vcare/Features/Auth/ViewModel/login_cubit/login_cubit.dart';
 import 'package:vcare/Features/Home%20Screen/View/Pages/homeScreen.dart';
@@ -13,6 +14,7 @@ import 'package:vcare/Features/Splash%20Screen/splash_screen.dart';
 
 import 'Core/Database/local_database/shared_preferences.dart';
 import 'Features/Auth/View/Pages/login.dart';
+import 'Features/Update Profile/View/Pages/update_profile.dart';
 import 'Features/details_screen/view/pages/details_view.dart';
 import 'Features/onboarding/View/Pages/onboarding.dart';
 
@@ -66,7 +68,9 @@ class MyApp extends StatelessWidget {
           LoginPage.routeName: (_) => const LoginPage(),
           DetailsPage.routeName: (_) => DetailsPage(),
           HomeScreen.routeName: (_) => HomeScreen(),
-          ViewMore.routeName : (_) => const ViewMore()
+          ViewMore.routeName : (_) => const ViewMore(),
+          AccountTab.routeName : (_) => const AccountTab(),
+          UpdatePage.routeName : (_) => const UpdatePage()
         },
       ),
     );

@@ -8,6 +8,7 @@ import 'package:vcare/Features/Home%20Tab/Model/HomeTabResponse.dart';
 import '../Features/Account Tab/Model/ProfileResponse.dart';
 import '../Features/History Tab/Model/HistoryResponse.dart';
 import '../Features/Home Tab/Model/view More/ViewMoreResponse.dart';
+import '../Features/Update Profile/model/UpdateResponse.dart';
 import '../Features/details_screen/Model/BookAppointmentResponse.dart';
 
 class ApiManager {
@@ -74,6 +75,34 @@ class ApiManager {
 
     var loginResponse = ViewMoreResponse.fromJson(jsonDecode(request.body));
     return loginResponse;
+  }
+
+
+
+
+  static Future<UpdateResponse> updateData(
+      {required String token,
+      required String name,
+        required String email,
+        required String phone,
+         String? password,
+         String? passwordConfirmation,
+        required int gender
+      }) async {
+    var uri = Uri.https(baseUrl, 'api/user/update');
+    var request = await http.post(uri,headers: {
+      HttpHeaders.authorizationHeader : "Bearer $token"
+    },body: {
+      'name': name,
+      'email': email,
+      'phone': phone,
+      'gender': "$gender",
+      'password': password,
+      'password_confirmation': passwordConfirmation,
+    });
+
+    var updateResponse = UpdateResponse.fromJson(jsonDecode(request.body));
+    return updateResponse;
   }
 
 
