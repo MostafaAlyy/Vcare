@@ -42,13 +42,19 @@ class MyApp extends StatelessWidget {
         debugShowCheckedModeBanner: false,
         title: 'VCare',
         theme: ThemeData(
+          colorScheme: ColorScheme.fromSeed(seedColor: ColorHelper.mainColor),
+
+          useMaterial3: true,
+
           datePickerTheme: const DatePickerThemeData(
+            headerForegroundColor: Colors.white,
               headerBackgroundColor: ColorHelper.mainColor,
               dividerColor: ColorHelper.mainColor,
               rangeSelectionBackgroundColor: ColorHelper.mainColor,
               surfaceTintColor: ColorHelper.mainColor,
               todayBorder: BorderSide(color: ColorHelper.mainColor)),
           timePickerTheme: const TimePickerThemeData(
+
               hourMinuteTextColor: Colors.white,
               dayPeriodTextColor: ColorHelper.mainColor,
               dialHandColor: ColorHelper.mainColor,
@@ -58,6 +64,7 @@ class MyApp extends StatelessWidget {
                     MaterialStatePropertyAll(ColorHelper.mainColor),
               )),
           primaryColor: ColorHelper.mainColor,
+
         ),
         //home: const LoginPage(),
         initialRoute: SplashScreen.routeName,
@@ -69,7 +76,7 @@ class MyApp extends StatelessWidget {
           DetailsPage.routeName: (_) => DetailsPage(),
           HomeScreen.routeName: (_) => HomeScreen(),
           ViewMore.routeName : (_) => const ViewMore(),
-          AccountTab.routeName : (_) => const AccountTab(),
+          AccountTab.routeName : (_) =>  AccountTab(),
           UpdatePage.routeName : (_) => const UpdatePage()
         },
       ),

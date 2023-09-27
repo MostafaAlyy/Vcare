@@ -23,6 +23,9 @@ class DetailsPage extends StatelessWidget {
 
     return Scaffold(
       appBar: AppBar(
+        iconTheme: const IconThemeData(
+          color: Colors.white
+        ),
         backgroundColor: ColorHelper.mainColor,
       ),
         body: DetailsScreenBody(
@@ -42,8 +45,6 @@ class DetailsScreenBody extends StatelessWidget {
    @override
   Widget build(BuildContext context) {
     Arrgs arrgs = ModalRoute.of(context)!.settings.arguments as Arrgs;
-    //Arguments arg = ModalRoute.of(context)!.settings.arguments as Arguments;
-    print(controller.text);
     return SingleChildScrollView(
       child: Form(
         key: formKey,
@@ -100,6 +101,23 @@ class DetailsScreenBody extends StatelessWidget {
                     onTap: () async {
                       final selectedDate = await showDatePicker(
                         context: context,
+                        builder: (context, child) {
+                          return Theme(
+                              data: Theme.of(context).copyWith(
+                              colorScheme: const ColorScheme.light(
+                                primary: ColorHelper.mainColor, // <-- SEE HERE
+                                onPrimary: Colors.white, // <-- SEE HERE
+                                onSurface: ColorHelper.mainColor, // <-- SEE HERE
+                              ),
+                              textButtonTheme: TextButtonThemeData(
+                                style: TextButton.styleFrom(
+                                  primary: ColorHelper.mainColor, // button text color
+                                ),
+                              )),
+
+                              child: child!
+                          );
+                        },
                         initialDate: DateTime.now(),
                         firstDate: DateTime(2023),
                         lastDate: DateTime(2030),
@@ -135,14 +153,28 @@ class DetailsScreenBody extends StatelessWidget {
                       final selectedDate = await showTimePicker(
                         initialEntryMode: TimePickerEntryMode.dial,
                         context: context,
-                        initialTime: TimeOfDay.now(),
+                        initialTime: const TimeOfDay(hour: 0, minute: 0),
                         cancelText:  "Cancel",
                         confirmText:  "Save",
                         helpText:"Select time",
                         builder: (context, Widget? child) {
-                          return MediaQuery(
-                            data: MediaQuery.of(context).copyWith(alwaysUse24HourFormat: true),
-                            child: child!,
+                          return Theme(
+
+                            data: Theme.of(context).copyWith(
+                                colorScheme: const ColorScheme.light(
+                                  primary: ColorHelper.mainColor, // <-- SEE HERE
+                                  onPrimary: Colors.white, // <-- SEE HERE
+                                  onSurface: ColorHelper.mainColor, // <-- SEE HERE
+                                ),
+                                textButtonTheme: TextButtonThemeData(
+                                  style: TextButton.styleFrom(
+                                    primary: ColorHelper.mainColor, // button text color
+                                  ),
+                                )),
+                            child: MediaQuery(
+                              data: MediaQuery.of(context).copyWith(alwaysUse24HourFormat: true),
+                              child: child!,
+                            ),
                           );
                         },
                       );
