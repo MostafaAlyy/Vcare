@@ -2,6 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:vcare/Core/ColorHelper.dart';
 import 'package:vcare/Features/Auth/ViewModel/login_cubit/login_cubit.dart';
 import 'package:vcare/Features/onboarding/View/Pages/onboarding.dart';
+import '../../Core/Database/local_database/shared_preferences.dart';
+import '../Auth/View/Pages/login.dart';
+import '../Auth/View/Pages/register.dart';
 import '../Home Screen/View/Pages/homeScreen.dart';
 
 class SplashScreen extends StatelessWidget {
@@ -12,11 +15,19 @@ class SplashScreen extends StatelessWidget {
     Future.delayed(
       const Duration(seconds: 2),
       () {
-        Navigator.pushReplacementNamed(
+        if (CacheData.getData(key: 'OnBoarding') == null) {
+          CacheData.setData(key: 'OnBoarding', value: false);
+        }
+        if (CacheData.getData(key: 'OnBoarding') == false) {
+          Navigator.pushReplacementNamed(context, OnBoarding.routeName);
+        } else {
+          Navigator.pushReplacementNamed(
             context,
             (LoginCubit.userData.token != null)
                 ? HomeScreen.routeName
-                : OnBoarding.routeName);
+                : RegisterPage.routeName,
+          );
+        }
       },
     );
     return Scaffold(

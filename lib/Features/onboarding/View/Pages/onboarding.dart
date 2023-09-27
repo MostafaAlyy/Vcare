@@ -3,6 +3,8 @@ import 'package:onboarding/onboarding.dart';
 import 'package:vcare/Core/ColorHelper.dart';
 import 'package:vcare/Features/Auth/View/Pages/register.dart';
 
+import '../../../../Core/Database/local_database/shared_preferences.dart';
+
 class OnBoarding extends StatefulWidget {
   const OnBoarding({Key? key}) : super(key: key);
   static const String routeName = 'onboarding';
@@ -186,6 +188,7 @@ class _OnBoardingState extends State<OnBoarding> {
       child: InkWell(
         borderRadius: defaultProceedButtonBorderRadius,
         onTap: () {
+          CacheData.setData(key: 'OnBoarding', value: true);
           Navigator.pushAndRemoveUntil(
             context,
             MaterialPageRoute(
