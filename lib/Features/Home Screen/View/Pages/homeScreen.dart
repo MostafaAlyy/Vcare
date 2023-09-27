@@ -64,7 +64,7 @@ class HomeScreen extends StatelessWidget {
     const DoctorsTab(),
     SearchTab(),
     const HistoryTab(),
-    const AccountTab(),
+     AccountTab(),
   ];
   List<PersistentBottomNavBarItem> bottomNavBarItems = [
     PersistentBottomNavBarItem(

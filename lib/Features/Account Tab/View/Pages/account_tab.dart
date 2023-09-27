@@ -1,20 +1,28 @@
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:vcare/Core/ColorHelper.dart';
 import 'package:vcare/Features/Account%20Tab/ViewModel/profile_states.dart';
+import 'package:vcare/Features/Auth/View/Pages/login.dart';
+import 'package:vcare/Features/Auth/ViewModel/logout_cubit/logout_cubit.dart';
 import 'package:vcare/Features/History%20Tab/View/Pages/history_tab.dart';
 import 'package:vcare/Features/History%20Tab/ViewModel/history_cubit.dart';
 
+import '../../../Auth/ViewModel/logout_cubit/logout_states.dart';
 import '../../../History Tab/View/Components/appoiintmet_details_dialog.dart';
 import '../../../History Tab/View/Pages/appoinment_widget.dart';
 import '../../../History Tab/ViewModel/history_states.dart';
 import '../../../History Tab/ViewMoudel/cubit/history_cubit.dart';
 import '../../../Update Profile/View/Pages/update_profile.dart';
+import '../../../details_screen/view/components/dialog.dart';
 import '../../ViewModel/profile_cubit.dart';
 
 class AccountTab extends StatelessWidget {
-  const AccountTab({super.key});
+   AccountTab({super.key});
 static const String routeName = 'profile';
+
+var logoutCubit = LogoutCubit();
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -101,6 +109,7 @@ static const String routeName = 'profile';
                           Text('ºººººººººº', style: TextStyle(fontSize: 18)),
                         ],
                       ),
+                      buildLogout(logoutCubit,context),
                     ],
                   ),
                 );
@@ -128,6 +137,77 @@ static const String routeName = 'profile';
         ),
             ))
       ],
+    );
+  }
+
+  Widget buildLogout(LogoutCubit cubit,BuildContext context){
+    return BlocConsumer<LogoutCubit, LogoutStates>(
+      bloc: logoutCubit,
+      listenWhen: (previous, current) {
+        if (previous is LogoutLoadingState) {
+          DialogUtilities.hideDialog(context);
+        }
+        if (current is LogoutSuccessState ||
+            current is LogoutLoadingState ||
+            current is LogoutFailState) {
+          return true;
+        }
+        return false;
+      },
+      buildWhen: (previous, current) {
+        if (current is LogoutInitialState) return true;
+        return false;
+      },
+      listener: (context, state) {
+        // event
+        if (state is LogoutFailState) {
+          // show message
+          DialogUtilities.showMessage(
+              context,
+              state.message??"",
+              posstiveActionName: "ok");
+        }
+        else if (state is LogoutLoadingState) {
+          //show loading...
+          DialogUtilities.showLoadingDialog(
+              context,
+              "Loading...");
+        }
+        else if (state is LogoutSuccessState) {
+          if (state.logoutResponse.status == true) {
+            final storage =  FlutterSecureStorage();
+                   storage.delete(key: 'token');
+            Navigator.of(context,rootNavigator: true)
+                .pushReplacementNamed(LoginPage.routeName);
+
+          } else if (state.logoutResponse.status == false) {
+            DialogUtilities.showMessage(
+              context,
+              " ${state.logoutResponse.message}",
+              posstiveActionName: state.logoutResponse.message,
+            );
+          }
+          // show dialog
+          // navigate to home screen
+        }
+      },
+      builder: (context, state){
+        return  Center(
+          child: TextButton.icon(
+
+            onPressed: (){
+              logoutCubit.logout();
+            },
+            icon: const Text('Logout',style: TextStyle(
+                color: ColorHelper.mainColor,
+                fontSize: 19
+            ),),
+            label: const Icon(Icons.logout_outlined,color:ColorHelper.mainColor ,),
+
+          ),
+
+        );
+      },
     );
   }
 }
