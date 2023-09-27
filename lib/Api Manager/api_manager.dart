@@ -85,7 +85,6 @@ class ApiManager {
       String? password,
       String? passwordConfirmation,
       required int gender}) async {
-    print(password);
     var uri = Uri.https(baseUrl, 'api/user/update');
     var request = await http.post(uri,
         headers: {HttpHeaders.authorizationHeader: "Bearer $token"},
