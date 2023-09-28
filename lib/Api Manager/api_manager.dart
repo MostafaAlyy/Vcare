@@ -5,6 +5,7 @@ import 'package:http/http.dart' as http;
 import 'package:vcare/Features/Home%20Tab/Model/HomeTabResponse.dart';
 
 import '../Features/Account Tab/Model/ProfileResponse.dart';
+import '../Features/Auth/Models/logout/LogoutResponse.dart';
 import '../Features/History Tab/Model/HistoryResponse.dart';
 import '../Features/Home Tab/Model/view More/ViewMoreResponse.dart';
 import '../Features/Update Profile/model/UpdateResponse.dart';
@@ -107,4 +108,18 @@ class ApiManager {
     var updateResponse = UpdateResponse.fromJson(jsonDecode(request.body));
     return updateResponse;
   }
+
+  static Future<LogoutResponse> logout(
+      {required String token}) async {
+    var uri = Uri.https(baseUrl, 'api/auth/logout');
+    var request = await http.post(
+      uri,
+      headers: {HttpHeaders.authorizationHeader: "Bearer $token"},
+    );
+
+    var logoutResponse = LogoutResponse.fromJson(jsonDecode(request.body));
+    return logoutResponse;
+  }
+
+
 }

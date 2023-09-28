@@ -53,6 +53,9 @@ class _UpdatePageState extends State<UpdatePage> {
           var cupit = UpdateCubit.get(context);
           return Scaffold(
             appBar: AppBar(
+              iconTheme: IconThemeData(
+                color: Colors.white
+              ),
               backgroundColor: ColorHelper.mainColor,
             ),
             resizeToAvoidBottomInset: true,
